@@ -15,7 +15,7 @@ class BladeServiceProvider extends ServiceProvider
   {
     Blade::directive('role', function ($expression) {
       $expression ??= '';
-      $params = explode(': ', $expression);
+      $params = explode(': ', $expression, 2);
 
       $expression = $params[1] ?? 'Auth::user()';
       $role = $params[0] ?: 1;
