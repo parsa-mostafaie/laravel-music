@@ -34,6 +34,13 @@ class HomeController extends Controller
   public function __invoke()
   {
     if (Auth::check()) {
+      /** @var \App\Models\User */
+      $current_user = Auth::user();
+
+      if ($current_user->isA('admin')) {
+        return to_route('admin');
+      }
+
       return to_route('dashboard');
     }
 

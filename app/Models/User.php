@@ -12,6 +12,19 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * A Array to easy convert any role type (string|number) to int
+     * How? User::roles[0] = 0, User::roles['admin'] = 1, ...
+     * 
+     * @var array
+     */
+    const roles = [
+        0,
+        1,
+        'user' => 0,
+        'admin' => 1
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -43,5 +56,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isA($role)
+    {
+        $role = static::roles[$role];
+
+        return $this->role >= $role;
     }
 }

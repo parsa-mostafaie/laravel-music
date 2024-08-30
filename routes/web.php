@@ -13,6 +13,10 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [HomeController::class, 'dashboard'])
     ->name('dashboard');
+
+  Route::get('/admin', fn() => view('admin'))
+    ->middleware('role:admin')
+    ->name('admin');
 });
 
 Route::get('/home', HomeController::class);

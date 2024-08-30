@@ -60,6 +60,15 @@
                     {{ __('Logout') }}
                   </a>
 
+                  @role
+                  <a class="dropdown-item" href="{{ route('admin') }}">
+                    {{ __('Admin') }}
+                  </a>
+                  @endif
+                  <a href="{{ route('dashboard') }}" class="dropdown-item">
+                    {{ __('Dasboard') }}
+                  </a>
+
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                   </form>
