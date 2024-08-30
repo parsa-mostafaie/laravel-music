@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PanelController;
 
 Route::get('/', function () {
   return view('welcome');
@@ -11,12 +11,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-  Route::get('/dashboard', [HomeController::class, 'dashboard'])
+  Route::get('/dashboard', [PanelController::class, 'dashboard'])
     ->name('dashboard');
 
-  Route::get('/admin', fn() => view('admin'))
+  Route::get('/admin', [PanelController::class, 'admin'])
     ->middleware('role:admin')
     ->name('admin');
 });
 
-Route::get('/home', HomeController::class);
+Route::get('/home', PanelController::class);
+Route::get('/panel', PanelController::class);

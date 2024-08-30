@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class PanelController extends Controller
 {
   /**
    * Create a new controller instance.
@@ -24,6 +24,16 @@ class HomeController extends Controller
   public function dashboard()
   {
     return view('dashboard');
+  }
+
+  /**
+   * Show the application admin panel.
+   *
+   * @return \Illuminate\Contracts\Support\Renderable
+   */
+  public function admin()
+  {
+    return view('admin');
   }
 
   /**
