@@ -11,6 +11,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+include_once 'api.php';
+
 Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [PanelController::class, 'dashboard'])
     ->name('dashboard');

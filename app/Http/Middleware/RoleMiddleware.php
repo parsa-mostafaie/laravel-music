@@ -16,12 +16,12 @@ class RoleMiddleware
    *
    * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
    */
-  public function handle(Request $request, Closure $next, $min = 1): Response
+  public function handle(Request $request, Closure $next, $min = 1, $to = 'view'): Response
   {
     $min = User::roles[$min];
 
     if (!Auth::check() || Auth::user()->role < $min) {
-      if (Route::has('login')) {
+      if (Route::has('login') && $to != 'api') {
         return to_route('login');
       }
 

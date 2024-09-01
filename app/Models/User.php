@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Gate;
 
 class User extends Authenticatable
 {
@@ -22,9 +23,17 @@ class User extends Authenticatable
   const roles = [
     0,
     1,
+    2,
+    3,
     'user' => 0,
-    'admin' => 1
+    'manager' => 1,
+    'admin' => 2,
+    'developer' => 3,
   ];
+
+  const MAX_ROLE = 3;
+  const MAX_SECURE_ROLE = 2;
+  const MIN_ROLE = 0;
 
   /**
    * The attributes that are mass assignable.
@@ -47,6 +56,13 @@ class User extends Authenticatable
     'password',
     'remember_token',
   ];
+
+  /**
+   * Attributes to append
+   * 
+   * @var array<int, string>
+   */
+  protected $appends = ['name', 'grow_url', 'shrink_url', 'role_name'];
 
   /**
    * Get the attributes that should be cast.
@@ -87,5 +103,33 @@ class User extends Authenticatable
         $this->lastname = $parts[1] ?? '';
       }
     );
+  }
+
+  public function getGrowUrlAttribute()
+  {
+    if ($this->role >= self::MAX_SECURE_ROLE || Gate::denies('grow-users', [$this]))
+      return null;
+
+    return route('api.user.grow', ['user' => $this]);
+  }
+
+  public function getShrinkUrlAttribute()
+  {
+    if ($this->role <= self::MIN_ROLE || Gate::denies('shrink-users', [$this]))
+      return null;
+
+    return route('api.user.shrink', ['user' => $this]);
+  }
+
+  public function getRoleNameAttribute()
+  {
+    $fr = array_flip(static::roles);
+
+    return $fr[$this->role];
+  }
+
+  public static function validateRole($role, $secure = true)
+  {
+    return min(max(static::roles[$role], static::MIN_ROLE), $secure ? static::MAX_SECURE_ROLE : static::MAX_ROLE);
   }
 }

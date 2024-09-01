@@ -18,8 +18,8 @@ class BladeServiceProvider extends ServiceProvider
       $params = explode(': ', $expression, 2);
 
       $expression = $params[1] ?? 'Auth::user()';
-      $role = $params[0] ?: 1;
-      $role = User::roles[$role];
+      $role = $params[0] ?: 'admin';
+      $role = User::validateRole($role);
 
       return "<?php if ({$expression}->role >= {$role}): ?>";
     });

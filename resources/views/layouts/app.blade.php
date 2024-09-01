@@ -62,7 +62,7 @@
                     {{ __('Logout') }}
                   </a>
 
-                  @role
+                  @role (admin)
                   <a class="dropdown-item" href="{{ route('admin') }}">
                     {{ __('Admin') }}
                   </a>

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UsersDataTable;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-  public function admin(UsersDataTable $dataTable)
+  public function admin(Request $request)
   {
-    return $dataTable->render('admin.users');
+    return view('admin.users', [
+      'currentPage' => $request->get('page'),
+      'search' => $request->get('search')
+    ]);
   }
 }
