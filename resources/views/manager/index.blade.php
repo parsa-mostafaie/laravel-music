@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">{{ __('Admin') }}</div>
+          <div class="card-header">{{ __('Manager') }}</div>
 
           <div class="card-body">
             @if (session('status'))
@@ -14,7 +14,7 @@
               </div>
             @endif
               
-            {{ __('You are logged in as admin!') }}
+            {{ __('You are in manager panel!') }}
           </div>
         </div>
       </div>

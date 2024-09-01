@@ -5,9 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('role:admin,api')
-  ->prefix('/api/')->group(
-    function () {
+Route::prefix('/api/')->group(
+  function () {
+    Route::middleware('role:manager,api')->group(function () {
       Route::get('users', function (Request $request) {
         return
           User::whereRaw(
@@ -20,17 +20,20 @@ Route::middleware('role:admin,api')
       Route::put('user/{user}/grow', function (User $user) {
         Gate::authorize('grow-users', [$user]);
 
-        $user->role = User::validateRole($user->role + 1);
-
-        $user->save();
+        User::withoutTimestamps(function () use ($user) {
+          $user->role = User::validateRole($user->role + 1);
+          $user->save();
+        });
       })->name('api.user.grow');
 
       Route::put('user/{user}/shrnk', function (User $user) {
         Gate::authorize('shrink-users', [$user]);
 
-        $user->role = User::validateRole($user->role - 1);
-
-        $user->save();
+        User::withoutTimestamps(function () use ($user) {
+          $user->role = User::validateRole($user->role - 1);
+          $user->save();
+        });
       })->name('api.user.shrink');
-    }
-  );
+    });
+  }
+);

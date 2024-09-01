@@ -17,13 +17,22 @@ Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [PanelController::class, 'dashboard'])
     ->name('dashboard');
 
-  Route::middleware('role:admin')->group(function () {
-    Route::get('/admin', [PanelController::class, 'admin'])
-      ->name('admin');
+  Route::middleware('role:admin')
+    ->prefix('admin')
+    ->group(function () {
+      Route::get('/', [PanelController::class, 'admin'])
+        ->name('admin');
+    });
 
-    Route::get('/admin/users', [UsersController::class, 'admin'])
-      ->name('admin.users');
-  });
+  Route::middleware('role:manager')
+    ->prefix('manager')
+    ->group(function () {
+      Route::get('/users', [UsersController::class, 'manage'])
+        ->name('manager.users');
+
+      Route::get('/', [PanelController::class, 'manager'])
+        ->name('manager');
+    });
 });
 
 Route::get('/home', PanelController::class);

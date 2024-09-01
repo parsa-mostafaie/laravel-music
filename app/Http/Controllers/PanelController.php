@@ -23,7 +23,7 @@ class PanelController extends Controller
    */
   public function dashboard()
   {
-    return view('dashboard');
+    return view('dashboard.index');
   }
 
   /**
@@ -33,7 +33,17 @@ class PanelController extends Controller
    */
   public function admin()
   {
-    return view('admin');
+    return view('admin.index');
+  }
+
+  /**
+   * Show the application manager panel.
+   *
+   * @return \Illuminate\Contracts\Support\Renderable
+   */
+  public function manager()
+  {
+    return view('manager.index');
   }
 
   /**
@@ -49,6 +59,8 @@ class PanelController extends Controller
 
       if ($current_user->isA('admin')) {
         return to_route('admin');
+      } else if ($current_user->isA('manager')) {
+        return to_route('manager');
       }
 
       return to_route('dashboard');
