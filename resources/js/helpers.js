@@ -7,3 +7,8 @@ export const debounce = (callback, wait) => {
     }, wait);
   };
 };
+
+export const formatDate = function (date) {
+  date = new Date(date);
+  return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+};

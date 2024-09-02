@@ -64,6 +64,12 @@
         <a href="{{ route('password.request') }}" class="nav-link @routeclass(['password.request', 'password.reset'])">
           <i class="bi bi-key-fill"></i> {{ __('Reset Password') }}</a>
       </li>
+      @auth
+        <li class="nav-item">
+          <a href="{{ route('verification.notice') }}" class="nav-link @routeclass('verification.notice')">
+            <i class="bi bi-envelope"></i> {{ __('Verify Email (If Not)') }}</a>
+        </li>
+      @endauth
     </ul>
 
     @auth

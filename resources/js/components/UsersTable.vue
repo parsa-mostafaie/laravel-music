@@ -27,6 +27,12 @@
         Grow
       </ajax-button>
     </template>
+    <template #column-everify="user">
+      <template v-if="!user.email_verified_at">
+        <i>Never!</i>
+      </template>
+      <template v-else>{{ formatDate(user.email_verified_at) }}</template>
+    </template>
   </AjaxTable>
 
   <button class="btn btn-primary d-block mt-1" @click="reloadTable">
@@ -38,6 +44,7 @@
 import { ref } from "vue";
 import AjaxTable from "./AjaxTable.vue";
 import AjaxButton from "./AjaxButton.vue";
+import { formatDate } from "../helpers.js";
 
 const table_ref = ref(null);
 
@@ -61,6 +68,7 @@ const columns = {
   name: "Full Name",
   email: "Email",
   role_name: "Role",
+  everify: "Verified At",
   created_at: "Created At",
   updated_at: "Updated At",
   actions: "Actions",
