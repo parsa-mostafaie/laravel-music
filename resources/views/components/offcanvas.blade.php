@@ -25,6 +25,9 @@
           </a>
         </li>
       @endrole
+      <li class="nav-item">
+        <a href="{{ route('password.request') }}" class="nav-link @routeclass(['password.request', 'password.reset'])">{{ __('Reset Password') }}</a>
+      </li>
       @auth
         <li class="nav-item">
           <a class="nav-link @routeclass('dashboard')" href="{{ route('dashboard') }}">
