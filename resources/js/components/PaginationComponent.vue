@@ -3,7 +3,7 @@
     <div v-if="from && to">
       Showing {{ from }} to {{ to }} of {{ total }} entries
     </div>
-    <div v-else=""></div>
+    <div v-else>No result Found!</div>
 
     <ul class="pagination m-0">
       <li class="page-item previous" v-if="page > 1">

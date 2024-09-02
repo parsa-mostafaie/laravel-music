@@ -94,7 +94,7 @@ const search = ref(props.search);
 async function reload() {
   state.value = 0;
   try {
-    const response = await axios.get("/api/users", {
+    const response = await axios.get(props.api, {
       params: { page: page.value, search: search.value },
     });
     data.value = response.data;

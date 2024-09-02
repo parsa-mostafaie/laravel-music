@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtistsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PanelController;
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     ->group(function () {
       Route::get('/users', [UsersController::class, 'manage'])
         ->name('manager.users');
+
+      Route::get('/artists', [ArtistsController::class, 'manage'])
+        ->name('manager.artists');
 
       Route::get('/', [PanelController::class, 'manager'])
         ->name('manager');

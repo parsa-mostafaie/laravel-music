@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,15 @@ Route::prefix('/api/')->group(
         return
           User::whereRaw(
             'CONCAT(users.firstname, " ", users.lastname) LIKE ?',
+            ["%{$request->get('search')}%"]
+          )
+            ->paginate(2);
+      });
+
+      Route::get('artists', function (Request $request) {
+        return
+          Artist::whereRaw(
+            'name LIKE ?',
             ["%{$request->get('search')}%"]
           )
             ->paginate(2);
