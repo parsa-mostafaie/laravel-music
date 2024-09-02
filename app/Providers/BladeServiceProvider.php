@@ -21,7 +21,7 @@ class BladeServiceProvider extends ServiceProvider
       $role = $params[0] ?: 'admin';
       $role = User::validateRole($role);
 
-      return "<?php if ({$expression}->role >= {$role}): ?>";
+      return "<?php if (Auth::check() && {$expression}->role >= {$role}): ?>";
     });
 
     Blade::directive('endrole', function () {

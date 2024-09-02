@@ -25,22 +25,26 @@
           </a>
         </li>
       @endrole
-      <li class="nav-item">
-        <a class="nav-link @routeclass('dashboard')" href="{{ route('dashboard') }}">
-          {{ __('Dasboard') }}
-        </a>
-      </li>
-      <hr class="nav-divider">
-      <li class="nav-item">
-        <a class="text-danger nav-link" href="{{ route('logout') }}"
-          onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <i class="bi bi-box-arrow-left me-2"></i> {{ __('Logout') }}
-        </a>
-      </li>
+      @auth
+        <li class="nav-item">
+          <a class="nav-link @routeclass('dashboard')" href="{{ route('dashboard') }}">
+            {{ __('Dasboard') }}
+          </a>
+        </li>
+        <hr class="nav-divider">
+        <li class="nav-item">
+          <a class="text-danger nav-link" href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="bi bi-box-arrow-left me-2"></i> {{ __('Logout') }}
+          </a>
+        </li>
+      @endauth
     </ul>
 
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-      @csrf
-    </form>
+    @auth
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+      </form>
+    @endauth
   </div>
 </div>
