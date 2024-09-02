@@ -1,6 +1,10 @@
 <template>
   <div class="d-flex mt-1 justify-content-between align-items-center">
-    <div>Showing {{ from }} to {{ to }} of {{ total }} entries</div>
+    <div v-if="from && to">
+      Showing {{ from }} to {{ to }} of {{ total }} entries
+    </div>
+    <div v-else=""></div>
+
     <ul class="pagination m-0">
       <li class="page-item previous" v-if="page > 1">
         <a
@@ -39,7 +43,7 @@
 <script setup>
 const emit = defineEmits(["paginate"]);
 
-const { page, maxPage, from, to, total } = defineProps({
+const props = defineProps({
   page: {
     type: Number,
     default: 1,
@@ -61,9 +65,10 @@ const { page, maxPage, from, to, total } = defineProps({
     default: 1,
   },
 });
+const { maxPage, from, to, total } = props;
+const page = Math.min(maxPage, props.page);
 
 const paginate = ($page) => {
-  window.history.pushState([], '',);
   emit("paginate", $page);
 };
 </script>
