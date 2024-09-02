@@ -23,6 +23,14 @@ class BladeServiceProvider extends ServiceProvider
 
       return "<?php if ({$expression}->role >= {$role}): ?>";
     });
+
+    Blade::directive('endrole', function () {
+      return "<?php endif; ?>";
+    });
+
+    Blade::directive('routeclass', function ($expression) {
+      return "<?php echo getClassForRoute($expression); ?>";
+    });
   }
 
   /**
