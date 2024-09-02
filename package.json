@@ -13,6 +13,7 @@
         "laravel-datatables-vite": "^0.5.2",
         "laravel-vite-plugin": "^1.0",
         "sass": "^1.56.1",
+        "sweetalert2": "^11.12.4",
         "vite": "^5.0",
         "vue": "^3.2.37"
     },

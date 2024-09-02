@@ -8,24 +8,25 @@
     :search="search"
   >
     <template #column-actions="user">
-      <ajax-button
-        method="put"
-        :href="user.shrink_url"
-        v-if="user.shrink_url"
-        color="danger"
-        @refresh="reloadTable"
-      >
-        Shrink
-      </ajax-button>
-      <ajax-button
-        class="ms-1"
-        :href="user.grow_url"
-        v-if="user.grow_url"
-        method="put"
-        @refresh="reloadTable"
-      >
-        Grow
-      </ajax-button>
+      <div class="btn-group">
+        <ajax-button
+          method="put"
+          :href="user.shrink_url"
+          v-if="user.shrink_url"
+          color="danger"
+          @refresh="reloadTable"
+        >
+          Shrink
+        </ajax-button>
+        <ajax-button
+          :href="user.grow_url"
+          v-if="user.grow_url"
+          method="put"
+          @refresh="reloadTable"
+        >
+          Grow
+        </ajax-button>
+      </div>
     </template>
     <template #column-everify="user">
       <template v-if="!user.email_verified_at">

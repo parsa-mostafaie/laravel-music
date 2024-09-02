@@ -54,6 +54,7 @@ import PaginationComponent from "./PaginationComponent.vue";
 import axios from "axios";
 import { computed, onMounted, ref } from "vue";
 import { debounce } from "../helpers";
+import { error as error_alert } from "../alerts";
 
 const props = defineProps({
   columns: {
@@ -76,10 +77,10 @@ const props = defineProps({
     type: [Number, String],
     default: 1,
   },
-  
+
   search: {
     type: String,
-    default: '',
+    default: "",
   },
 });
 
@@ -103,6 +104,7 @@ async function reload() {
   } catch (_error) {
     error.value = _error;
     state.value = -1;
+    error_alert();
   }
 }
 

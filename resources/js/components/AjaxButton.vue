@@ -6,8 +6,14 @@
 
 <script setup>
 import axios from "axios";
+import {
+  cancel as cancel_alert,
+  dangerWork,
+  error as error_alert,
+  success as success_alert,
+} from "../alerts";
 
-const { href, color, method } = defineProps({
+const { href, color, method, danger } = defineProps({
   href: {
     type: String,
     required: true,
@@ -20,20 +26,37 @@ const { href, color, method } = defineProps({
     type: String,
     default: "primary",
   },
+  danger: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["refresh"]);
 
 async function handleClick() {
   try {
-    await axios.request({
-      method: method.toUpperCase(),
-      url: href,
-      withCredentials: true,
-    });
-    emit("refresh");
+    async function handler() {
+      await axios.request({
+        method: method.toUpperCase(),
+        url: href,
+      });
+
+      emit("refresh");
+    }
+
+    if (danger) {
+      const res = await dangerWork();
+
+      if (!res.isConfirmed) return cancel_alert();
+    }
+
+    await handler();
+
+    return success_alert();
   } catch (error) {
     console.error(error);
+    error_alert();
   }
 }
 </script>
