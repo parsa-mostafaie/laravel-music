@@ -29,6 +29,8 @@ return new class extends Migration {
                 ->on('musics')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
+            $table->unique(['user_id', 'music_id']);
         });
     }
 
