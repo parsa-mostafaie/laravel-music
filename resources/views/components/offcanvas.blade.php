@@ -5,6 +5,27 @@
   </div>
   <div class="offcanvas-body">
     <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="{{ route('landing') }}" class="nav-link @routeclass('landing')">
+          <i class="bi bi-house-fill"></i> {{ __('Landing Page') }}
+        </a>
+      </li>
+
+      @guest
+        <hr class="nav-divider">
+        @if (Route::has('login'))
+          <li class="nav-item">
+            <a class="nav-link @routeclass('login')" href="{{ route('login') }}">{{ __('Login') }}</a>
+          </li>
+        @endif
+
+        @if (Route::has('register'))
+          <li class="nav-item">
+            <a class="nav-link @routeclass('register')" href="{{ route('register') }}">{{ __('Register') }}</a>
+          </li>
+        @endif
+      @endguest
+
       @role(admin)
         <li class="nav-item">
           <a href="{{ route('admin') }}" class="nav-link @routeclass('admin')">
@@ -25,9 +46,6 @@
           </a>
         </li>
       @endrole
-      <li class="nav-item">
-        <a href="{{ route('password.request') }}" class="nav-link @routeclass(['password.request', 'password.reset'])">{{ __('Reset Password') }}</a>
-      </li>
       @auth
         <li class="nav-item">
           <a class="nav-link @routeclass('dashboard')" href="{{ route('dashboard') }}">
@@ -42,6 +60,10 @@
           </a>
         </li>
       @endauth
+      <li class="nav-item">
+        <a href="{{ route('password.request') }}" class="nav-link @routeclass(['password.request', 'password.reset'])">
+          <i class="bi bi-key-fill"></i> {{ __('Reset Password') }}</a>
+      </li>
     </ul>
 
     @auth

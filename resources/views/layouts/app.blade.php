@@ -18,10 +18,7 @@
 <body>
   <div id="app">
     @include('components.navbar')
-
-    @auth
-      @include('components.offcanvas')
-    @endauth
+    @include('components.offcanvas')
 
     <main class="py-4">
       @yield('content')

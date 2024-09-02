@@ -21,18 +21,25 @@
         @guest
           @if (Route::has('login'))
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              <a class="nav-link @routeclass('login')" href="{{ route('login') }}">{{ __('Login') }}</a>
             </li>
           @endif
 
           @if (Route::has('register'))
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+              <a class="nav-link @routeclass('register')" href="{{ route('register') }}">{{ __('Register') }}</a>
             </li>
           @endif
+
+          <hr>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvas">
+              {{__('Menu')}}
+            </a>
+          </li>
         @else
-          <li class="nav-item dropdown">
-            <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas">
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvas">
               {{ __('Hi') }} {{ Auth::user()->firstname }} 👋
             </a>
           </li>

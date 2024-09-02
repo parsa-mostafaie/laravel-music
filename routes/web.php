@@ -7,7 +7,7 @@ use App\Http\Controllers\UsersController;
 
 Route::get('/', function () {
   return view('welcome');
-});
+})->name('landing');
 
 Auth::routes();
 
