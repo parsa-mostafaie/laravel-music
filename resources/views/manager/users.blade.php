@@ -5,7 +5,7 @@
     <div class="card">
       <div class="card-header">Manage Users</div>
       <div class="card-body">
-        <vue-users-table current-page="{{ $currentPage }}" search="{{$search}}"></vue-users-table>
+        <users-table current-page="{{ $currentPage }}" search="{{$search}}"></users-table>
       </div>
     </div>
   </div>
