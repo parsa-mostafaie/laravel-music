@@ -49,12 +49,10 @@
 </template>
 
 <script setup>
-import TableComponent from "./TableComponent.vue";
-import PaginationComponent from "./PaginationComponent.vue";
 import axios from "axios";
 import { computed, onMounted, ref } from "vue";
-import { debounce } from "../helpers";
-import { error as error_alert } from "../alerts";
+import { debounce } from "../../../helpers";
+import { error as error_alert } from "../../../alerts";
 
 const props = defineProps({
   columns: {

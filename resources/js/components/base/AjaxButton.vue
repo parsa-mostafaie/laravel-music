@@ -11,7 +11,7 @@ import {
   dangerWork,
   error as error_alert,
   success as success_alert,
-} from "../alerts";
+} from "../../alerts";
 
 const { href, color, method, danger } = defineProps({
   href: {

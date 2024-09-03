@@ -43,8 +43,6 @@
 
 <script setup>
 import { ref } from "vue";
-import AjaxTable from "./AjaxTable.vue";
-import AjaxButton from "./AjaxButton.vue";
 import { formatDate } from "../helpers.js";
 
 const table_ref = ref(null);
