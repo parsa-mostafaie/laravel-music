@@ -8,6 +8,8 @@
     }"
     :name="name"
     :id="name"
+    v-bind="$attrs"
+    v-model="model"
   />
   <pre class="invalid-feedback" v-if="errors[name]">{{
     errors[name].flat().join("\n")
@@ -20,4 +22,6 @@ const { errors, res, loading, name } = defineProps([
   "loading",
   "name",
 ]);
+
+const model = defineModel();
 </script>
