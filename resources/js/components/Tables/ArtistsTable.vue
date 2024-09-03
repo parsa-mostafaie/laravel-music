@@ -13,12 +13,20 @@
     <template #column-createdAt="artist">
       {{ formatDate(artist.created_at) }}
     </template>
+    <template #column-actions="artist">
+      <ajax-button
+        danger
+        :href="`/api/artist/${artist.id}`"
+        method="delete"
+        @refresh="reloadTable"
+      >
+        Delete
+      </ajax-button>
+    </template>
   </AjaxTable>
 
   <div class="btn-group mt-1">
-    <button class="btn btn-primary" @click="reloadTable">
-      Reload
-    </button>
+    <button class="btn btn-primary" @click="reloadTable">Reload</button>
 
     <!-- Button trigger modal -->
     <button
@@ -57,6 +65,7 @@ const columns = {
   id: "#",
   name: "Name",
   createdAt: "Created At",
+  actions: "Actions",
 };
 
 function reloadTable() {
