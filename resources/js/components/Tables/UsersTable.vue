@@ -43,7 +43,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { formatDate } from "../helpers.js";
+import { formatDate } from "../../helpers.js";
 
 const table_ref = ref(null);
 
