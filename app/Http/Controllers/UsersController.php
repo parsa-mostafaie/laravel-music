@@ -36,7 +36,7 @@ class UsersController extends Controller
     });
   }
 
-  public function get(Request $request)
+  public function show(Request $request)
   {
     return
       User::whereRaw(

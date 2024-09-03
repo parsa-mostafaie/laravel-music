@@ -29,7 +29,7 @@ class Artist extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = [];
+  protected $appends = ['destroy_url'];
 
   const UPDATED_AT = null;
 
@@ -41,5 +41,9 @@ class Artist extends Model
   protected function casts(): array
   {
     return [];
+  }
+
+  public function getDestroyUrlAttribute(){
+    return route('api.artists.destroy', [$this]);
   }
 }

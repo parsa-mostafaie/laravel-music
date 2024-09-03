@@ -2,28 +2,28 @@
 
 use App\Http\Controllers\ArtistsController;
 use App\Http\Controllers\UsersController;
-use App\Models\User;
-use App\Models\Artist;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/api/')->group(
   function () {
     Route::middleware('role:manager,api')->group(function () {
-      Route::get('users', [UsersController::class, 'get']);
+      Route::get('users', [UsersController::class, 'show'])
+        ->name('api.users');
 
-      Route::get('artists', [ArtistsController::class, 'get']);
+      Route::get('artists', [ArtistsController::class, 'show'])
+        ->name('api.artists');
 
-      Route::delete('artist/{artist}', [ArtistsController::class, 'destroy']);
+      Route::delete('artists/{artist}', [ArtistsController::class, 'destroy'])
+        ->name('api.artists.destroy');
 
-      Route::post('artist', [ArtistsController::class, 'create']);
+      Route::post('artists', [ArtistsController::class, 'store'])
+        ->name('api.artists.store');
 
-      Route::put('user/{user}/grow', [UsersController::class, 'grow'])
-        ->name('api.user.grow');
+      Route::put('users/{user}/grow', [UsersController::class, 'grow'])
+        ->name('api.users.grow');
 
-      Route::put('user/{user}/shrnk', [UsersController::class, 'shrink'])
-        ->name('api.user.shrink');
+      Route::put('users/{user}/shrnk', [UsersController::class, 'shrink'])
+        ->name('api.users.shrink');
     });
   }
 );

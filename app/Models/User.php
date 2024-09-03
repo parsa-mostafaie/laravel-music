@@ -110,7 +110,7 @@ class User extends Authenticatable
     if ($this->role >= self::MAX_SECURE_ROLE || Gate::denies('grow-users', [$this]))
       return null;
 
-    return route('api.user.grow', ['user' => $this]);
+    return route('api.users.grow', ['user' => $this]);
   }
 
   public function getShrinkUrlAttribute()
@@ -118,7 +118,7 @@ class User extends Authenticatable
     if ($this->role <= self::MIN_ROLE || Gate::denies('shrink-users', [$this]))
       return null;
 
-    return route('api.user.shrink', ['user' => $this]);
+    return route('api.users.shrink', ['user' => $this]);
   }
 
   public function getRoleNameAttribute()

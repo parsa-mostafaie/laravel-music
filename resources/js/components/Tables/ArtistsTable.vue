@@ -16,7 +16,7 @@
     <template #column-actions="artist">
       <ajax-button
         danger
-        :href="`/api/artist/${artist.id}`"
+        :href="artist.destroy_url"
         method="delete"
         @refresh="reloadTable"
       >

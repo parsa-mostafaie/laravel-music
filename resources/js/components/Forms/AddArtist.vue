@@ -21,7 +21,7 @@
           <ajax-form
             @success="onSuccess"
             v-slot="states"
-            action="/api/artist"
+            action="/api/artists"
             method="post"
           >
             <div class="input-group">
