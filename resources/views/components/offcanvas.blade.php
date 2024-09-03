@@ -45,6 +45,11 @@
             {{ __('Manage Users') }}
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.artists') }}" class="nav-link @routeclass('manager.artists')">
+            {{ __('Manage Artists') }}
+          </a>
+        </li>
       @endrole
       @auth
         <li class="nav-item">
