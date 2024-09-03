@@ -37,7 +37,14 @@ async function submitHandler(event) {
 
     res.value = response.data;
 
+    formRef.value.reset();
+
     await successAlert();
+
+    // handle redirects
+    if (response.request.responseURL !== action) {
+      location.href = response.request.responseURL;
+    }
   } catch (_error) {
     if (isAxiosError(_error) && _error.response.status == 422) {
       errors.value = _error.response.data.errors;
