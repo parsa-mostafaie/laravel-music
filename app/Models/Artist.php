@@ -31,6 +31,8 @@ class Artist extends Model
    */
   protected $appends = [];
 
+  const UPDATED_AT = null;
+
   /**
    * Get the attributes that should be cast.
    *

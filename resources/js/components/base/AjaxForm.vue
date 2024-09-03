@@ -5,6 +5,7 @@
 </template>
 <script setup>
 import axios, { isAxiosError } from "axios";
+import { url } from "../../helpers";
 import { ref } from "vue";
 import { success as successAlert, error as errorAlert } from "../../alerts";
 
@@ -24,6 +25,8 @@ const { action, method } = defineProps({
   },
 });
 
+const emit = defineEmits(["success"]);
+
 async function submitHandler(event) {
   event.preventDefault();
   res.value = {};
@@ -35,16 +38,20 @@ async function submitHandler(event) {
 
     const response = await axios.post(action, formData);
 
+    loading.value = false;
+  
     res.value = response.data;
-
-    formRef.value.reset();
 
     await successAlert();
 
+    formRef.value.reset();
+
     // handle redirects
-    if (response.request.responseURL !== action) {
+    if (response.request.responseURL != url(action)) {
       location.href = response.request.responseURL;
     }
+
+    emit('success');
   } catch (_error) {
     if (isAxiosError(_error) && _error.response.status == 422) {
       errors.value = _error.response.data.errors;

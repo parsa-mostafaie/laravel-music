@@ -27,6 +27,16 @@ Route::prefix('/api/')->group(
             ->paginate(2);
       });
 
+      Route::post('artist', function (Request $request) {
+        $request->validate(
+          [
+            'name' => 'required|string|unique:artists,name'
+          ]
+        );
+
+        return Artist::create($request->all());
+      });
+
       Route::put('user/{user}/grow', function (User $user) {
         Gate::authorize('grow-users', [$user]);
 

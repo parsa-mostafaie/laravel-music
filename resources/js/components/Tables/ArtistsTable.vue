@@ -1,4 +1,7 @@
 <template>
+  <!-- Modal -->
+  <add-artist @refresh="reloadTable" />
+
   <AjaxTable
     :columns="columns"
     id-field="id"
@@ -12,9 +15,21 @@
     </template>
   </AjaxTable>
 
-  <button class="btn btn-primary d-block mt-1" @click="reloadTable">
-    Reload
-  </button>
+  <div class="btn-group mt-1">
+    <button class="btn btn-primary" @click="reloadTable">
+      Reload
+    </button>
+
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-info"
+      data-bs-toggle="modal"
+      data-bs-target="#addArtistModal"
+    >
+      Add
+    </button>
+  </div>
 </template>
 
 <script setup>
