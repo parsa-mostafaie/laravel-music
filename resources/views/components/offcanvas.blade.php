@@ -12,7 +12,7 @@
       </li>
 
       @guest
-        <hr class="nav-divider">
+        <hr class="my-0">
         @if (Route::has('login'))
           <li class="nav-item">
             <a class="nav-link @routeclass('login')" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -27,6 +27,7 @@
       @endguest
 
       @role(admin)
+        <hr class="my-0" />
         <li class="nav-item">
           <a href="{{ route('admin') }}" class="nav-link @routeclass('admin')">
             {{ __('Admin') }}
@@ -35,6 +36,7 @@
       @endrole
 
       @role(manager)
+        <hr class="my-0"/>
         <li class="nav-item">
           <a href="{{ route('manager') }}" class="nav-link @routeclass('manager')">
             {{ __('Manager') }}
@@ -52,12 +54,13 @@
         </li>
       @endrole
       @auth
+        <hr class="my-0">
         <li class="nav-item">
           <a class="nav-link @routeclass('dashboard')" href="{{ route('dashboard') }}">
             {{ __('Dasboard') }}
           </a>
         </li>
-        <hr class="nav-divider">
+        <hr class="my-0">
         <li class="nav-item">
           <a class="text-danger nav-link" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

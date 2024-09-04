@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-function getClassForRoute($name, $class = "text-dark")
+function getClassForRoute($name, $class = "text-dark fw-bold")
 {
   if (
     Route::currentRouteName() == $name ||
