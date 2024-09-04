@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artist;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ArtistsController extends Controller
 {
@@ -24,6 +25,21 @@ class ArtistsController extends Controller
     );
 
     return Artist::create($request->all());
+  }
+
+  public function update(Request $request, Artist $artist)
+  {
+    $request->validate(
+      [
+        'name' => [
+          'required',
+          'string',
+          Rule::unique('artists')->ignore($artist->id)
+        ]
+      ]
+    );
+
+    return $artist->update($request->all());
   }
 
   public function show(Request $request)

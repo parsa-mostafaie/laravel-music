@@ -16,6 +16,9 @@ Route::prefix('/api/')->group(
       Route::delete('artists/{artist}', [ArtistsController::class, 'destroy'])
         ->name('api.artists.destroy');
 
+      Route::put('artists/{artist}', [ArtistsController::class, 'update'])
+        ->name('api.artists.update');
+
       Route::post('artists', [ArtistsController::class, 'store'])
         ->name('api.artists.store');
 

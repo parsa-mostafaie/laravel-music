@@ -14,7 +14,7 @@ const res = ref({});
 const errors = ref({});
 const loading = ref(false);
 
-const { action, method } = defineProps({
+const props = defineProps({
   method: {
     type: String,
     default: "post",
@@ -25,7 +25,7 @@ const { action, method } = defineProps({
   },
 });
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(["success", "reset"]);
 
 async function submitHandler(event) {
   event.preventDefault();
@@ -34,9 +34,9 @@ async function submitHandler(event) {
   loading.value = true;
   try {
     const formData = new FormData(formRef.value);
-    formData.append("_method", method);
+    formData.append("_method", props.method);
 
-    const response = await axios.post(action, formData);
+    const response = await axios.post(props.action, formData);
 
     loading.value = false;
   
@@ -44,10 +44,10 @@ async function submitHandler(event) {
 
     await successAlert();
 
-    formRef.value.reset();
+    emit('reset', formRef.value);
 
     // handle redirects
-    if (response.request.responseURL != url(action)) {
+    if (response.request.responseURL != url(props.action)) {
       location.href = response.request.responseURL;
     }
 

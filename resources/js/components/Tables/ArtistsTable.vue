@@ -1,6 +1,7 @@
 <template>
   <!-- Modal -->
   <add-artist @refresh="reloadTable" />
+  <edit-artist @refresh="reloadTable" ref="edit_ref" />
 
   <AjaxTable
     :columns="columns"
@@ -14,14 +15,24 @@
       {{ formatDate(artist.created_at) }}
     </template>
     <template #column-actions="artist">
-      <ajax-button
-        danger
-        :href="artist.destroy_url"
-        method="delete"
-        @refresh="reloadTable"
-      >
-        Delete
-      </ajax-button>
+      <div class="btn-group">
+        <ajax-button
+          danger
+          :href="artist.destroy_url"
+          method="delete"
+          @refresh="reloadTable"
+        >
+          Delete
+        </ajax-button>
+        <button
+          class="btn btn-secondary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#editArtistModal"
+          @click="fillEdit(artist)"
+        >
+          Edit
+        </button>
+      </div>
     </template>
   </AjaxTable>
 
@@ -45,6 +56,7 @@ import { ref } from "vue";
 import { formatDate } from "../../helpers.js";
 
 const table_ref = ref(null);
+const edit_ref = ref(null);
 
 const { api, currentPage, search } = defineProps({
   api: {
@@ -70,5 +82,9 @@ const columns = {
 
 function reloadTable() {
   table_ref.value.reload();
+}
+
+function fillEdit(artist) {
+  edit_ref.value.fill(artist);
 }
 </script>
