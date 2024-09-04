@@ -4,15 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::table('artists', function (Blueprint $table) {
-            $table->unique('name');
+            $table->text('bio')->nullable()->after('name');
+            $table->text('image')->nullable()->after('bio');
         });
     }
 
@@ -22,7 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('artists', function (Blueprint $table) {
-            $table->dropUnique('name');
+            $table->dropColumn('bio');
+            $table->dropColumn('image');
         });
     }
 };
