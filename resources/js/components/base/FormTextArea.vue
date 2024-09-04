@@ -1,0 +1,26 @@
+<template>
+  <textarea
+    :disabled="loading"
+    :class="{
+      'form-control': true,
+      'is-invalid': errors[name] || false,
+    }"
+    :name="name"
+    :id="name"
+    v-bind="$attrs"
+    v-model="model"
+  />
+  <pre class="invalid-feedback" v-if="errors[name]">{{
+    errors[name].flat().join("\n")
+  }}</pre>
+</template>
+<script setup>
+const { errors, res, loading, name } = defineProps([
+  "errors",
+  "res",
+  "loading",
+  "name",
+]);
+
+const model = defineModel();
+</script>

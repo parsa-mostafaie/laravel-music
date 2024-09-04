@@ -30,6 +30,16 @@
               <form-control v-bind="states" name="name" />
             </div>
 
+            <div class="input-group mt-2">
+              <span class="input-group-text">Bio</span>
+              <form-text-area v-bind="states" name="bio" />
+            </div>
+
+            <div class="input-group mt-1">
+              <span class="input-group-text">Image</span>
+              <form-control v-bind="states" name="image" type="file" />
+            </div>
+
             <div class="btn-group mt-2 btn-group">
               <form-button class="btn-primary" v-bind="states" type="submit" />
               <button

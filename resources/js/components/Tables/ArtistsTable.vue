@@ -11,6 +11,15 @@
     :current-page="currentPage"
     :search="search"
   >
+    <template #column-bio="artist">
+      <p style="max-width: 150px" :title="artist.bio" class="text-truncate">
+        {{ artist.bio }}
+      </p>
+    </template>
+    <template #column-image="artist">
+      <img :src="artist.image_url" width="30px" v-if="artist.image_url"/>
+      <pre v-else>No Image Found</pre>
+    </template>
     <template #column-createdAt="artist">
       {{ formatDate(artist.created_at) }}
     </template>
@@ -76,6 +85,8 @@ const { api, currentPage, search } = defineProps({
 const columns = {
   id: "#",
   name: "Name",
+  bio: "Bio",
+  image: "Image",
   createdAt: "Created At",
   actions: "Actions",
 };

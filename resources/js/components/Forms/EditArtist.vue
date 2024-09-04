@@ -30,6 +30,21 @@
               <form-control v-bind="states" name="name" v-model="name" />
             </div>
 
+            <div class="input-group mt-2">
+              <span class="input-group-text">Bio</span>
+              <form-text-area v-bind="states" name="bio" v-model="bio" />
+            </div>
+
+            <div class="input-group mt-1">
+              <span class="input-group-text">Image</span>
+              <form-control
+                v-bind="states"
+                name="image"
+                type="file"
+                v-model="fileModel"
+              />
+            </div>
+
             <div class="btn-group mt-2 btn-group">
               <form-button class="btn-primary" v-bind="states" type="submit" />
               <button
@@ -53,8 +68,10 @@ import { computed, ref } from "vue";
 const emit = defineEmits(["refresh"]);
 const closeRef = ref(null);
 
-const artist_id = ref('');
-const name = ref('');
+const artist_id = ref("");
+const name = ref("");
+const fileModel = ref("");
+const bio = ref("");
 
 const form_url = computed(() => `/api/artists/${artist_id.value}`);
 
@@ -64,13 +81,14 @@ function onSuccess() {
 }
 
 function reset() {
-  fill({ name: '', id: '' });
+  fill();
 }
 
-function fill(data) {
-  name.value = data.name;
-  artist_id.value = data.id;
-  console.log(data, name.value, artist_id.value);
+function fill(data = {}) {
+  name.value = data.name ?? "";
+  artist_id.value = data.id ?? "";
+  bio.value = data.bio ?? "";
+  fileModel.value = "";
 }
 
 defineExpose({

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class Artist extends Model
 {
@@ -14,7 +16,9 @@ class Artist extends Model
    * @var array<int, string>
    */
   protected $fillable = [
-    'name'
+    'name',
+    'image',
+    'bio'
   ];
 
   /**
@@ -29,7 +33,7 @@ class Artist extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['destroy_url'];
+  protected $appends = ['destroy_url', 'image_url'];
 
   const UPDATED_AT = null;
 
@@ -43,7 +47,43 @@ class Artist extends Model
     return [];
   }
 
-  public function getDestroyUrlAttribute(){
+  public function getDestroyUrlAttribute()
+  {
     return route('api.artists.destroy', [$this]);
+  }
+
+  public function getImageUrlAttribute()
+  {
+    return !is_null($this->image) ? Storage::url($this->image) : null;
+  }
+
+  public function removePreviousImage()
+  {
+    if (!($original = $this->getOriginal('image'))) {
+      return true;
+    }
+
+    return Storage::disk('public')->delete($original);
+  }
+
+  public function removeImage()
+  {
+    if (!($path = $this->image)) {
+      return true;
+    }
+
+    return Storage::disk('public')->delete($path);
+  }
+
+  /**
+   * The "booted" method of the model.
+   *
+   * @return void
+   */
+  protected static function booted()
+  {
+    static::deleted(function ($user) {
+      $user->removeImage();
+    });
   }
 }

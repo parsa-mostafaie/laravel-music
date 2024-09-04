@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ArtistsController extends Controller
@@ -20,11 +21,21 @@ class ArtistsController extends Controller
   {
     $request->validate(
       [
-        'name' => 'required|string|unique:artists,name'
+        'name' => 'required|string|unique:artists,name',
+        'image' => 'nullable|image|mimes:jpg,png|max:2048',
+        'bio' => 'nullable|string'
       ]
     );
 
-    return Artist::create($request->all());
+    $artist = new Artist;
+
+    $artist->fill($request->all(['name', 'bio']));
+
+    $this->uploadImage($request, $artist);
+
+    $artist->save();
+
+    return $artist;
   }
 
   public function update(Request $request, Artist $artist)
@@ -35,11 +46,31 @@ class ArtistsController extends Controller
           'required',
           'string',
           Rule::unique('artists')->ignore($artist->id)
-        ]
+        ],
+        'image' => 'nullable|image|mimes:jpg,png|max:2048',
+        'bio' => 'nullable|string'
       ]
     );
 
-    return $artist->update($request->all());
+    $artist->fill($request->all(['name', 'bio']));
+
+    $this->uploadImage($request, $artist);
+
+    $artist->save();
+
+    return response($artist, 200);
+  }
+
+  public function uploadImage(Request $request, Artist $artist){
+    if ($file = $request->file('image')) {
+      $artist->image = $file->store('uploads', 'public');
+
+      if ($artist->image === false) {
+        return response("Failed To Upload Image!", 500);
+      }
+
+      $artist->removePreviousImage();
+    }
   }
 
   public function show(Request $request)
