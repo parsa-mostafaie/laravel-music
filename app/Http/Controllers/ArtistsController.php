@@ -6,12 +6,13 @@ use App\Models\Artist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class ArtistsController extends Controller
 {
   public function manage(Request $request)
   {
-    return view('manager.artists', [
+    return Inertia::render('Manager/Artists', [
       'currentPage' => $request->get('page'),
       'search' => $request->get('search')
     ]);

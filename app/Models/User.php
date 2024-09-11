@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-  use HasFactory, Notifiable;
+  use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
   /**
    * A Array to easy convert any role type (string|number) to int
@@ -41,8 +43,7 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $fillable = [
-    'firstname',
-    'lastname',
+    'name',
     'email',
     'password',
   ];
@@ -55,6 +56,8 @@ class User extends Authenticatable
   protected $hidden = [
     'password',
     'remember_token',
+    'two_factor_recovery_codes',
+    'two_factor_secret',
   ];
 
   /**
@@ -62,7 +65,7 @@ class User extends Authenticatable
    * 
    * @var array<int, string>
    */
-  protected $appends = ['name', 'grow_url', 'shrink_url', 'role_name'];
+  protected $appends = ['grow_url', 'shrink_url', 'role_name', 'profile_photo_url'];
 
   /**
    * Get the attributes that should be cast.
@@ -93,17 +96,17 @@ class User extends Authenticatable
     return compact('firstname', 'lastname');
   }
 
-  public function name(): Attribute
-  {
-    return Attribute::make(
-      get: fn() => "$this->firstname $this->lastname",
-      set: function ($value) {
-        $parts = explode(' ', $value, 2);
-        $this->firstname = $parts[0];
-        $this->lastname = $parts[1] ?? '';
-      }
-    );
-  }
+  // public function name(): Attribute
+  // {
+  //   return Attribute::make(
+  //     get: fn() => "$this->firstname $this->lastname",
+  //     set: function ($value) {
+  //       $parts = explode(' ', $value, 2);
+  //       $this->firstname = $parts[0];
+  //       $this->lastname = $parts[1] ?? '';
+  //     }
+  //   );
+  // }
 
   public function getGrowUrlAttribute()
   {

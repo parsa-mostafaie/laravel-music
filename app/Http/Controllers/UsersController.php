@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
   public function manage(Request $request)
   {
-    return view('manager.users', [
+    return inertia('Manager/Users', [
       'currentPage' => $request->get('page'),
       'search' => $request->get('search')
     ]);
@@ -40,7 +40,7 @@ class UsersController extends Controller
   {
     return
       User::whereRaw(
-        'CONCAT(users.firstname, " ", users.lastname) LIKE ?',
+        'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
         ->paginate(2);

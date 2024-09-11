@@ -1,15 +1,15 @@
 <template>
   <div>
-    <label for="search">Search</label>
-    <input
+    <input-label for="search" class="!inline-block">Search</input-label>
+    <text-input
       type="search"
       id="search"
+      class="!w-auto mx-2"
       v-model="search"
       @input="searchChanges"
-      class="form-control"
     />
   </div>
-  <hr />
+  <hr class="my-2" />
   <div class="main">
     <table-component
       :columns="props.columns"
@@ -24,9 +24,8 @@
     <slot name="fallback" v-if="!state">
       <div class="overlay mb-2">
         <div
-          class="d-flex justify-content-center bg-white border-1 border border-gray p-2 align-items-center"
+          class="flex justify-center p-2 align-center bg-indigo-500 shadow-lg shadow-indigo-500/50"
         >
-          <div class="spinner-border" role="status"></div>
           <span class="ms-1">Loading...</span>
         </div>
       </div>
@@ -44,15 +43,19 @@
   />
 
   <slot name="error" v-bind="error" v-if="state < 0">
-    <p class="text-danger">Error!</p>
+    <p class="text-[red]">Error!</p>
   </slot>
 </template>
 
 <script setup>
 import axios from "axios";
 import { computed, onMounted, ref } from "vue";
-import { debounce } from "../../../helpers";
+import { $_SET, debounce } from "../../../helpers";
 import { error as error_alert } from "../../../alerts";
+import TableComponent from "./TableComponent.vue";
+import PaginationComponent from "./PaginationComponent.vue";
+import TextInput from "../Forms/TextInput.vue";
+import InputLabel from "../Forms/InputLabel.vue";
 
 const props = defineProps({
   columns: {
@@ -108,14 +111,15 @@ async function reload() {
 
 function setpage(page_value) {
   page.value = page_value;
+  $_SET("page", page_value);
   reload();
   return false;
 }
 
 const searchChanges = debounce(function () {
+  $_SET("search", search.value);
   setpage(1);
-  reload();
-});
+}, 500);
 
 onMounted(reload);
 

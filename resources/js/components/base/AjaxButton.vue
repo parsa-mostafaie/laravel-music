@@ -1,7 +1,7 @@
 <template>
-  <button :class="`btn btn-${color} btn-sm`" @click="handleClick">
+  <form-button :variant="color" v-bind="$attrs"@click="handleClick">
     <slot>Click Me!</slot>
-  </button>
+  </form-button>
 </template>
 
 <script setup>
@@ -12,6 +12,7 @@ import {
   error as error_alert,
   success as success_alert,
 } from "../../alerts";
+import FormButton from "./Forms/FormButton.vue";
 
 const { href, color, method, danger } = defineProps({
   href: {

@@ -8,7 +8,7 @@
     :search="search"
   >
     <template #column-actions="user">
-      <div class="btn-group">
+      <div class="flex gap-1">
         <ajax-button
           method="put"
           :href="user.shrink_url"
@@ -35,15 +35,18 @@
       <template v-else>{{ formatDate(user.email_verified_at) }}</template>
     </template>
   </AjaxTable>
-
-  <button class="btn btn-primary d-block mt-1" @click="reloadTable">
+  
+  <form-button class="btn btn-primary d-block sm:mt-4 mt-6" @click="reloadTable">
     Reload
-  </button>
+  </form-button>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { formatDate } from "../../helpers.js";
+import AjaxButton from "../base/AjaxButton.vue";
+import AjaxTable from "../base/Table/AjaxTable.vue";
+import FormButton from "../base/Forms/FormButton.vue";
 
 const table_ref = ref(null);
 
@@ -67,7 +70,7 @@ const columns = {
   name: "Full Name",
   email: "Email",
   role_name: "Role",
-  everify: "Verified At",
+  everify: "Verify At",
   created_at: "Created At",
   updated_at: "Updated At",
   actions: "Actions",

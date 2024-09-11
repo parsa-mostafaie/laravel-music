@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class PanelController extends Controller
 {
@@ -19,31 +20,31 @@ class PanelController extends Controller
   /**
    * Show the application dashboard.
    *
-   * @return \Illuminate\Contracts\Support\Renderable
+   * @return \Inertia\Response
    */
   public function dashboard()
   {
-    return view('dashboard.index');
+    return Inertia::render('Dashboard');
   }
 
   /**
    * Show the application admin panel.
    *
-   * @return \Illuminate\Contracts\Support\Renderable
+   * @return \Inertia\Response
    */
   public function admin()
   {
-    return view('admin.index');
+    return Inertia::render('Admin');
   }
 
   /**
    * Show the application manager panel.
    *
-   * @return \Illuminate\Contracts\Support\Renderable
+   * @return \Inertia\Response
    */
   public function manager()
   {
-    return view('manager.index');
+    return Inertia::render('Manager');
   }
 
   /**

@@ -1,6 +1,6 @@
 <template>
   <!-- Modal -->
-  <add-artist @refresh="reloadTable" />
+  <add-artist @refresh="reloadTable" ref="add_ref" />
   <edit-artist @refresh="reloadTable" ref="edit_ref" />
 
   <AjaxTable
@@ -17,55 +17,60 @@
       </p>
     </template>
     <template #column-image="artist">
-      <img :src="artist.image_url" width="30px" v-if="artist.image_url"/>
+      <img :src="artist.image_url" width="30px" v-if="artist.image_url" />
       <pre v-else>No Image Found</pre>
     </template>
     <template #column-createdAt="artist">
       {{ formatDate(artist.created_at) }}
     </template>
     <template #column-actions="artist">
-      <div class="btn-group">
+      <div class="flex gap-1">
         <ajax-button
           danger
           :href="artist.destroy_url"
           method="delete"
+          variant="danger"
           @refresh="reloadTable"
         >
           Delete
         </ajax-button>
-        <button
-          class="btn btn-secondary btn-sm"
+        <form-button
+          variant="secondary"
           data-bs-toggle="modal"
           data-bs-target="#editArtistModal"
           @click="fillEdit(artist)"
         >
           Edit
-        </button>
+        </form-button>
       </div>
     </template>
   </AjaxTable>
 
-  <div class="btn-group mt-1">
-    <button class="btn btn-primary" @click="reloadTable">Reload</button>
+  <div class="flex gap-1 sm:mt-2 mt-4">
+    <form-button variant="primary" @click="reloadTable">Reload</form-button>
 
     <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-info"
-      data-bs-toggle="modal"
-      data-bs-target="#addArtistModal"
+    <form-button
+      variant="secondary"
+      @click="add_ref.show()"
     >
       Add
-    </button>
+    </form-button>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { formatDate } from "../../helpers.js";
+import AjaxTable from "../base/Table/AjaxTable.vue";
+import AjaxButton from "../base/AjaxButton.vue";
+import AddArtist from "../Forms/AddArtist.vue";
+import EditArtist from "../Forms/EditArtist.vue";
+import FormButton from "../base/Forms/FormButton.vue";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);
+const add_ref = ref(null);
 
 const { api, currentPage, search } = defineProps({
   api: {
