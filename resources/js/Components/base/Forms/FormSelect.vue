@@ -8,7 +8,7 @@
   >
     <slot />
     <option
-      :value="value != 0 ? value : ''"
+      :value="value"
       :selected="model == value"
       v-for="(text, value) in options"
     >
