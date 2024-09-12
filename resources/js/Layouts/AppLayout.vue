@@ -47,7 +47,7 @@ const logout = () => {
             <div class="flex">
               <!-- Logo -->
               <div class="shrink-0 flex items-center">
-                <Link :href="route('home')">
+                <Link :href="route('welcome')">
                   <ApplicationMark class="block h-9 w-auto" />
                 </Link>
               </div>
@@ -204,6 +204,10 @@ const logout = () => {
 
                     <DropdownLink :href="route('manager.artists')">
                       Artists
+                    </DropdownLink>
+
+                    <DropdownLink :href="route('manager.categories')">
+                      Categories
                     </DropdownLink>
 
                     <DropdownLink :href="route('manager.users')">
@@ -477,6 +481,12 @@ const logout = () => {
                 :active="route().current('manager.artists')"
               >
                 Artists
+              </ResponsiveNavLink>
+              <ResponsiveNavLink
+                :href="route('manager.categories')"
+                :active="route().current('manager.categories')"
+              >
+                Categories
               </ResponsiveNavLink>
               <ResponsiveNavLink
                 :href="route('manager.users')"

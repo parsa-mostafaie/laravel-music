@@ -2,12 +2,12 @@
   <DialogModal
     class="fade"
     :show="modalShown"
-    id="editArtistModal"
+    id="editCategoryModal"
     @close="close"
   >
     <template #title>
       <div class="flex justify-between">
-        <h5 id="editArtistModalLabel">Add Artist</h5>
+        <h5 id="editCategoryModalLabel">Edit Category</h5>
       </div>
     </template>
     <template #content>
@@ -21,11 +21,12 @@
         <input-label>Name</input-label>
         <form-control v-bind="states" name="name" v-model="name" />
 
-        <input-label class="mt-3">Bio</input-label>
-        <form-text-area v-bind="states" name="bio" v-model="bio" />
-
-        <input-label class="my-2">Image</input-label>
-        <form-upload v-bind="states" name="image" type="file" />
+        <input-label class="mt-2">Parent Category</input-label>
+        <categories-select
+          :states="states"
+          v-model="parent_id"
+          :excludes="[category_id]"
+        />
 
         <div class="flex gap-1 mt-4">
           <form-button v-bind="states" type="submit" />
@@ -42,22 +43,20 @@
 import { computed, ref } from "vue";
 import AjaxForm from "../base/Forms/AjaxForm.vue";
 import FormControl from "../base/Forms/FormControl.vue";
-import FormTextArea from "../base/Forms/FormTextArea.vue";
 import FormButton from "../base/Forms/FormButton.vue";
 import DialogModal from "../DialogModal.vue";
 import InputLabel from "@/Components/base/Forms/InputLabel.vue";
-import FormUpload from "../base/Forms/FormUpload.vue";
+import CategoriesSelect from "../Selects/CategoriesSelect.vue";
 
 const emit = defineEmits(["refresh"]);
 
-const artist_id = ref("");
+const category_id = ref("");
 const name = ref("");
-const fileModel = ref("");
-const bio = ref("");
+const parent_id = ref("");
 
 const modalShown = ref(false);
 
-const form_url = computed(() => `/api/artists/${artist_id.value}`);
+const form_url = computed(() => `/api/categories/${category_id.value}`);
 
 function onSuccess() {
   close();
@@ -71,9 +70,8 @@ function reset() {
 function fill(data = {}, _ = true) {
   _ && show();
   name.value = data.name ?? "";
-  artist_id.value = data.id ?? "";
-  bio.value = data.bio ?? "";
-  fileModel.value = "";
+  category_id.value = data.id ?? "";
+  parent_id.value = data.parent_id ?? "";
 }
 
 function show() {

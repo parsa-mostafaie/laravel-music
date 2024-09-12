@@ -35,3 +35,13 @@ export function $_SET(name, value) {
     window.history.pushState({ path: newurl }, "", newurl);
   }
 }
+
+export function except(list, _) {
+  const copy = { ...list };
+
+  if (!(_ instanceof Array)) _ = [_];
+
+  _.forEach((exclude) => delete copy[exclude]);
+
+  return copy;
+}

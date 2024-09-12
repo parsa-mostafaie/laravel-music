@@ -82,8 +82,8 @@ class Artist extends Model
    */
   protected static function booted()
   {
-    static::deleted(function ($user) {
-      $user->removeImage();
+    static::deleted(function ($artist) {
+      $artist->removeImage();
     });
   }
 }

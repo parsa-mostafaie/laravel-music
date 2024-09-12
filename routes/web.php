@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArtistsController;
+use App\Http\Controllers\CategoriesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,7 +16,7 @@ Route::get('/', function () {
     'laravelVersion' => Application::VERSION,
     'phpVersion' => PHP_VERSION,
   ]);
-});
+})->name('welcome');
 
 // custom:
 Route::middleware([
@@ -38,6 +39,9 @@ Route::middleware([
     ->group(function () {
       Route::get('/users', [UsersController::class, 'manage'])
         ->name('manager.users');
+
+      Route::get('/categories', [CategoriesController::class, 'manage'])
+        ->name('manager.categories');
 
       Route::get('/artists', [ArtistsController::class, 'manage'])
         ->name('manager.artists');

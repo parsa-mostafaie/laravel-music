@@ -1,7 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import UsersTable from '@/Components/Tables/UsersTable.vue';
-import { $_GET } from '@/helpers';
 </script>
 
 <template>
@@ -15,7 +14,7 @@ import { $_GET } from '@/helpers';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <UsersTable :current-page="$_GET('page')" :search="$_GET('search')"/>
+                    <UsersTable :current-page="$page.props.currentPage" :search="$page.props.search"/>
                 </div>
             </div>
         </div>
