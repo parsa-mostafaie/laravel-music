@@ -75,6 +75,6 @@ const props = defineProps({
 td,
 tr,
 th {
-  vertical-align: text-top;
+  vertical-align: text-center;
 }
 </style>

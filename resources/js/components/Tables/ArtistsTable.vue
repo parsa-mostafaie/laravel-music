@@ -11,6 +11,9 @@
     :current-page="currentPage"
     :search="search"
   >
+    <template #column-id="artist">
+      <a :href="artist.profile_url">{{ artist.id }}</a>
+    </template>
     <template #column-bio="artist">
       <p style="max-width: 150px" :title="artist.bio" class="text-truncate">
         {{ artist.bio }}
@@ -50,12 +53,7 @@
     <form-button variant="primary" @click="reloadTable">Reload</form-button>
 
     <!-- Button trigger modal -->
-    <form-button
-      variant="secondary"
-      @click="add_ref.show()"
-    >
-      Add
-    </form-button>
+    <form-button variant="secondary" @click="add_ref.show()"> Add </form-button>
   </div>
 </template>
 
