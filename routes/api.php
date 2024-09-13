@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtistsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,4 +47,8 @@ Route::middleware(
     Route::put('users/{user}/shrnk', [UsersController::class, 'shrink'])
       ->name('api.users.shrink');
   });
+
+  // follows
+  Route::post('follow/{artist}', [FollowController::class, 'follow'])->name('api.follow');
+  Route::post('unfollow/{artist}', [FollowController::class, 'unfollow'])->name('api.unfollow');
 });

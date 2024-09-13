@@ -53,7 +53,10 @@ const logout = () => {
               </div>
 
               <!-- Navigation Links -->
-              <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+              <div
+                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                v-if="$page.props.auth.user"
+              >
                 <NavLink
                   :href="route('dashboard')"
                   :active="route().current('dashboard')"
@@ -75,9 +78,24 @@ const logout = () => {
                   Admin
                 </NavLink>
               </div>
+              <div v-else class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <NavLink
+                  :href="route('login')"
+                  :active="route().current('login')"
+                  >Login</NavLink
+                >
+                <NavLink
+                  :href="route('register')"
+                  :active="route().current('register')"
+                  >Signup</NavLink
+                >
+              </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div
+              class="hidden sm:flex sm:items-center sm:ms-6"
+              v-if="$page.props.auth.user"
+            >
               <div class="ms-3 relative">
                 <!-- Teams Dropdown -->
                 <Dropdown
@@ -333,7 +351,7 @@ const logout = () => {
           }"
           class="sm:hidden"
         >
-          <div class="pt-2 pb-3 space-y-1">
+          <div v-if="$page.props.auth.user" class="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink
               :href="route('dashboard')"
               :active="route().current('dashboard')"
@@ -357,9 +375,26 @@ const logout = () => {
               Admin
             </ResponsiveNavLink>
           </div>
+          <div v-else class="pt-2 pb-3 space-y-1">
+            <ResponsiveNavLink
+              :href="route('login')"
+              :active="route().current('login')"
+            >
+              Login
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('register')"
+              :active="route().current('register')"
+            >
+              Signup
+            </ResponsiveNavLink>
+          </div>
 
           <!-- Responsive Settings Options -->
-          <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+          <div
+            class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600"
+            v-if="$page.props.auth.user"
+          >
             <div class="flex items-center px-4">
               <div
                 v-if="$page.props.jetstream.managesProfilePhotos"
@@ -473,9 +508,7 @@ const logout = () => {
             </div>
 
             <div class="mt-3 space-y-1" v-if="$page.props['is-manager']">
-              <div class="block px-4 py-2 text-sm text-gray-600">
-                Manage
-              </div>
+              <div class="block px-4 py-2 text-sm text-gray-600">Manage</div>
               <ResponsiveNavLink
                 :href="route('manager.artists')"
                 :active="route().current('manager.artists')"

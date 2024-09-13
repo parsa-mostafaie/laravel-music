@@ -51,5 +51,8 @@ Route::middleware([
     });
 });
 
+Route::get('artists/{artist}/{slug?}', [ArtistsController::class, 'profile'])
+->name('artists.profile');
+
 Route::get('/home', PanelController::class)->name('home');
 Route::get('/panel', PanelController::class);

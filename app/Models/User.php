@@ -135,4 +135,30 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     return min(max(static::roles[$role], static::MIN_ROLE), $secure ? static::MAX_SECURE_ROLE : static::MAX_ROLE);
   }
+
+  // FOLLOW
+  public function follow(Artist $artist)
+  {
+    if (!$this->isFollowing($artist)) {
+      Follow::create([
+        'followed_artist_id' => $this->id,
+        'following_user_id' => $artist->id
+      ]);
+    }
+  }
+
+  public function unfollow(Artist $artist)
+  {
+    Follow::where('followed_artist_id', $this->id)->where('following_user_id', $artist->id)->delete();
+  }
+
+  public function isFollowing(Artist $artist)
+  {
+    return $this->following()->where('artists.id', $artist->id)->exists();
+  }
+
+  public function following()
+  {
+    return $this->hasManyThrough(Artist::class, Follow::class, 'followed_artist_id', 'id', 'id', 'following_user_id');
+  }
 }

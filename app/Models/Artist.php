@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class Artist extends Model
@@ -33,7 +34,7 @@ class Artist extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['destroy_url', 'image_url'];
+  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'follower_count'];
 
   const UPDATED_AT = null;
 
@@ -85,5 +86,36 @@ class Artist extends Model
     static::deleted(function ($artist) {
       $artist->removeImage();
     });
+  }
+
+  public function getSlugAttribute()
+  {
+    return Str::slug($this->name);
+  }
+
+  public function getProfileUrlAttribute()
+  {
+    return route("artists.profile", [
+      $this,
+      $this->slug,
+    ]);
+  }
+
+  public function followers()
+  {
+    return $this->hasManyThrough(User::class, Follow::class, 'following_user_id', 'id', 'id', 'followed_artist_id');
+  }
+
+  public function getFollowedAttribute(){
+    /**
+     * @var User|null
+     */
+    $user = Auth::user();
+
+    return $user && $user->isFollowing($this);
+  }
+
+  public function getFollowerCountAttribute(){
+    return $this->followers()->count();
   }
 }

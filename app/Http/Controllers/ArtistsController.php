@@ -62,7 +62,8 @@ class ArtistsController extends Controller
     return response($artist, 200);
   }
 
-  public function uploadImage(Request $request, Artist $artist){
+  public function uploadImage(Request $request, Artist $artist)
+  {
     if ($file = $request->file('image')) {
       $artist->image = $file->store('uploads', 'public');
 
@@ -89,5 +90,15 @@ class ArtistsController extends Controller
     $artist->delete();
 
     return response("Artist was deleted successfully!", 204);
+  }
+
+  public function profile(Request $request, Artist $artist, ?string $slug = '')
+  {
+    if ($slug !== $artist->slug) {
+      return redirect(url($artist->profile_url, $request->all()));
+    }
+
+    return inertia('Artists/Profile')
+      ->with('artist', $artist);
   }
 }

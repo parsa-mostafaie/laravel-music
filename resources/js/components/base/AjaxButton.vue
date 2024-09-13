@@ -1,5 +1,5 @@
 <template>
-  <form-button :variant="color" v-bind="$attrs"@click="handleClick">
+  <form-button :variant="color" v-bind="$attrs" @click="handleClick">
     <slot>Click Me!</slot>
   </form-button>
 </template>
@@ -38,12 +38,12 @@ const emit = defineEmits(["refresh"]);
 async function handleClick() {
   try {
     async function handler() {
-      await axios.request({
+      const res = await axios.request({
         method: method.toUpperCase(),
         url: href,
       });
 
-      emit("refresh");
+      emit("refresh", res);
     }
 
     if (danger) {
