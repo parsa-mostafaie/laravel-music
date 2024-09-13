@@ -1,13 +1,12 @@
 <template>
   <!-- This is an example component -->
   <div class="p-3 flex justify-center">
-    <Card class="flex justify-start px-3 items-center">
+    <Card class="flex justify-start px-3 items-center sm:flex-row flex-col">
       <template #image v-if="artist.image_url">
-        <div class="p-5">
+        <div class="p-5 min-w-[200px]">
           <img
             class="rounded-full"
-            width="100"
-            height="100"
+            width="200"
             :src="artist.image_url"
             alt="Image"
           />
