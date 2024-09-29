@@ -7,6 +7,9 @@
     :current-page="currentPage"
     :search="search"
   >
+    <template #column-image="user">
+      <img :src="user.profile_photo_url" class="rounded" width="35"/>
+    </template>
     <template #column-actions="user">
       <div class="flex gap-1">
         <ajax-button
@@ -35,8 +38,11 @@
       <template v-else>{{ formatDate(user.email_verified_at) }}</template>
     </template>
   </AjaxTable>
-  
-  <form-button class="btn btn-primary d-block sm:mt-4 mt-6" @click="reloadTable">
+
+  <form-button
+    class="btn btn-primary d-block sm:mt-4 mt-6"
+    @click="reloadTable"
+  >
     Reload
   </form-button>
 </template>
@@ -67,6 +73,7 @@ const { api, currentPage, search } = defineProps({
 
 const columns = {
   id: "#",
+  image: "Profile Photo",
   name: "Full Name",
   email: "Email",
   role_name: "Role",

@@ -70,11 +70,3 @@ const props = defineProps({
   },
 });
 </script>
-
-<style scoped>
-td,
-tr,
-th {
-  vertical-align: text-center;
-}
-</style>

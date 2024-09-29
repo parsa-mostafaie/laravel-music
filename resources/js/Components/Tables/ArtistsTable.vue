@@ -20,7 +20,7 @@
       </p>
     </template>
     <template #column-image="artist">
-      <img :src="artist.image_url" width="30px" v-if="artist.image_url" />
+      <img :src="artist.image_url" width="30" v-if="artist.image_url" />
       <pre v-else>No Image Found</pre>
     </template>
     <template #column-createdAt="artist">
