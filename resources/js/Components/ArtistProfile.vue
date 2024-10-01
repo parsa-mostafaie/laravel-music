@@ -17,7 +17,7 @@
           <h5>
             {{ artist.name }}
           </h5>
-          <div class="flex gap-1" v-if="$page.props.auth.user">
+          <div class="flex gap-1" v-only-user>
             <ajax-button
               variant="secondary"
               method="post"
