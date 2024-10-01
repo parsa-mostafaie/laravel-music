@@ -141,15 +141,15 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     if (!$this->isFollowing($artist)) {
       Follow::create([
-        'followed_artist_id' => $this->id,
-        'following_user_id' => $artist->id
+        'followed_artist_id' => $artist->id,
+        'following_user_id' => $this->id
       ]);
     }
   }
 
   public function unfollow(Artist $artist)
   {
-    Follow::where('followed_artist_id', $this->id)->where('following_user_id', $artist->id)->delete();
+    Follow::where(['followed_artist_id'=> $artist->id,'following_user_id'=> $this->id])->delete();
   }
 
   public function isFollowing(Artist $artist)
@@ -159,6 +159,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
   public function following()
   {
-    return $this->hasManyThrough(Artist::class, Follow::class, 'followed_artist_id', 'id', 'id', 'following_user_id');
+    return $this->hasManyThrough(Artist::class, Follow::class, 'following_user_id', 'id', 'id', 'followed_artist_id');
   }
 }
