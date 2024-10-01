@@ -65,7 +65,7 @@ class ArtistsController extends Controller
   public function uploadImage(Request $request, Artist $artist)
   {
     if ($file = $request->file('image')) {
-      $artist->image = $file->store('uploads', 'public');
+      $artist->image = $file->store('artist-images', 'public');
 
       if ($artist->image === false) {
         return response("Failed To Upload Image!", 500);
