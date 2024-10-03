@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\TracksController;
 
 Route::get('/', function () {
   return Inertia::render('Welcome', [
@@ -45,6 +46,9 @@ Route::middleware([
 
       Route::get('/artists', [ArtistsController::class, 'manage'])
         ->name('manager.artists');
+
+      Route::get('/tracks', [TracksController::class, 'manage'])
+        ->name('manager.tracks');
 
       Route::get('/', [PanelController::class, 'manager'])
         ->name('manager');

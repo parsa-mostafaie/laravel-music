@@ -4,6 +4,7 @@ use App\Http\Controllers\ArtistsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\TracksController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(
@@ -36,6 +37,19 @@ Route::middleware(
 
     Route::post('categories', [CategoriesController::class, 'store'])
       ->name('api.categories.store');
+
+    // Track
+    Route::get('tracks', [TracksController::class, 'show'])
+      ->name('api.tracks');
+
+    Route::delete('tracks/{track}', [TracksController::class, 'destroy'])
+      ->name('api.tracks.destroy');
+
+    Route::put('tracks/{track}', [TracksController::class, 'update'])
+      ->name('api.tracks.update');
+
+    Route::post('tracks/{track}', [TracksController::class, 'update'])
+      ->name('api.tracks.store');
 
     // User
     Route::get('users', [UsersController::class, 'show'])
