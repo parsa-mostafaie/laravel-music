@@ -48,7 +48,7 @@ Route::middleware(
     Route::put('tracks/{track}', [TracksController::class, 'update'])
       ->name('api.tracks.update');
 
-    Route::post('tracks/{track}', [TracksController::class, 'update'])
+    Route::post('tracks', [TracksController::class, 'update'])
       ->name('api.tracks.store');
 
     // User
