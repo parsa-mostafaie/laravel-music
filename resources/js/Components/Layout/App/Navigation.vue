@@ -415,6 +415,7 @@ import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import GreenTick from "@/Components/SVG/GreenTick.vue";
 import ArrowDown from "@/Components/SVG/ArrowDown.vue";
+import ArrowUpDown from "@/Components/SVG/ArrowUpDown.vue";
 import OpenClose from "@/Components/SVG/OpenClose.vue";
 
 const showingNavigationDropdown = ref(false);
