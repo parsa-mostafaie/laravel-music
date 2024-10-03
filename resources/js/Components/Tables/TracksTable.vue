@@ -1,4 +1,5 @@
 <template>
+  <add-track ref="add_ref"/>
   <AjaxTable
     :columns="columns"
     id-field="id"
@@ -26,6 +27,7 @@ import { formatDate } from "../../helpers.js";
 import AjaxTable from "../base/Table/AjaxTable.vue";
 import AjaxButton from "../base/AjaxButton.vue";
 import FormButton from "../base/Forms/FormButton.vue";
+import AddTrack from "../Forms/AddTrack.vue";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
+use App\Models\Category;
 use App\Models\Track;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -11,7 +13,12 @@ class TracksController extends Controller
 {
   public function manage(Request $request)
   {
-    return Inertia::render('Manager/Tracks');
+    return Inertia::render('Manager/Tracks', [
+      'artists_select' => Artist::pluck('name', 'id'),
+      'currentPage' => $request->get('page'),
+      'search' => $request->get('search'),
+      'categories_select' => Category::pluck('name', 'id')
+    ]);
   }
 
   protected function rules(?Track $track = null)
