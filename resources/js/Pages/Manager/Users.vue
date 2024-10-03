@@ -4,7 +4,7 @@ import UsersTable from '@/Components/Tables/UsersTable.vue';
 </script>
 
 <template>
-    <AppLayout title="Manager">
+    <AppLayout title="Users">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Manager
