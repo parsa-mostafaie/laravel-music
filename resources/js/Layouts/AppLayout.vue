@@ -55,7 +55,7 @@ const logout = () => {
               <!-- Navigation Links -->
               <div
                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
-                v-only-user
+                v-if="$page.props.auth.user"
               >
                 <NavLink
                   :href="route('dashboard')"
@@ -66,19 +66,19 @@ const logout = () => {
                 <NavLink
                   :href="route('manager')"
                   :active="route().current('manager')"
-                  v-is-manager
+                  v-if="$page.props['is-manager']"
                 >
                   Manager
                 </NavLink>
                 <NavLink
                   :href="route('admin')"
                   :active="route().current('admin')"
-                  v-is-admin
+                  v-if="$page.props['is-admin']"
                 >
                   Admin
                 </NavLink>
               </div>
-              <div v-only-guest class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+              <div v-else class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <NavLink
                   :href="route('login')"
                   :active="route().current('login')"
@@ -94,7 +94,7 @@ const logout = () => {
 
             <div
               class="hidden sm:flex sm:items-center sm:ms-6"
-              v-only-user
+              v-if="$page.props.auth.user"
             >
               <div class="ms-3 relative">
                 <!-- Teams Dropdown -->
@@ -205,7 +205,7 @@ const logout = () => {
               </div>
 
               <!-- manager dropdown -->
-              <div class="ms-3 relative" v-is-manager>
+              <div class="ms-3 relative" v-if="$page.props['is-manager']">
                 <Dropdown>
                   <template #trigger>
                     <span
@@ -351,7 +351,7 @@ const logout = () => {
           }"
           class="sm:hidden"
         >
-          <div v-only-user class="pt-2 pb-3 space-y-1">
+          <div v-if="$page.props.auth.user" class="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink
               :href="route('dashboard')"
               :active="route().current('dashboard')"
@@ -362,7 +362,7 @@ const logout = () => {
             <ResponsiveNavLink
               :href="route('manager')"
               :active="route().current('manager')"
-              v-is-manager
+              v-if="$page.props['is-manager']"
             >
               Manager
             </ResponsiveNavLink>
@@ -370,12 +370,12 @@ const logout = () => {
             <ResponsiveNavLink
               :href="route('admin')"
               :active="route().current('admin')"
-              v-is-admin
+              v-if="$page.props['is-admin']"
             >
               Admin
             </ResponsiveNavLink>
           </div>
-          <div v-only-guest class="pt-2 pb-3 space-y-1">
+          <div v-else class="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink
               :href="route('login')"
               :active="route().current('login')"
@@ -393,7 +393,7 @@ const logout = () => {
           <!-- Responsive Settings Options -->
           <div
             class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600"
-            v-only-user
+            v-if="$page.props.auth.user"
           >
             <div class="flex items-center px-4">
               <div
@@ -507,7 +507,7 @@ const logout = () => {
               </template>
             </div>
 
-            <div class="mt-3 space-y-1" v-is-manager>
+            <div class="mt-3 space-y-1" v-if="$page.props['is-manager']">
               <div class="block px-4 py-2 text-sm text-gray-600">Manage</div>
               <ResponsiveNavLink
                 :href="route('manager.artists')"
