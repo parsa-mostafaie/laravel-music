@@ -15,7 +15,7 @@
         @success="onSuccess"
         @reset="(event) => event.reset()"
         v-slot="states"
-        action="/api/artists"
+        :action="route('api.artists.store')"
         method="post"
       >
         <input-label>Name</input-label>
