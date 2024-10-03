@@ -61,12 +61,12 @@ class Track extends Model
 
   public function getFileUrlAttribute()
   {
-    return !is_null($this->url) ? Storage::url($this->url) : null;
+    return !is_null($this->file) ? Storage::url($this->file) : null;
   }
 
   public function removePreviousFile()
   {
-    if (!($original = $this->getOriginal('url'))) {
+    if (!($original = $this->getOriginal('file'))) {
       return true;
     }
 
@@ -75,7 +75,7 @@ class Track extends Model
 
   public function removeFile()
   {
-    if (!($path = $this->url)) {
+    if (!($path = $this->file)) {
       return true;
     }
 
