@@ -49,10 +49,17 @@ const { api, currentPage, search } = defineProps({
 const columns = {
   id: "#",
   name: "Name",
-  bio: "Bio",
-  image: "Image",
-  createdAt: "Created At",
-  actions: "Actions",
+  summary: "Summary",
+  lyric: "Lyric",
+  cover: "Cover Image",
+  time: "Time",
+  size: "Size",
+  quality: "Quality",
+  artist: "Artist",
+  category: "Category",
+  published_at: "Publish Date",
+  created_at: "Creation Date",
+  updated_at: "Latest Update Date"
 };
 
 function reloadTable() {
