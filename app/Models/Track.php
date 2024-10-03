@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasImage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Track extends Model
 {
+  use Traits\HasImage {
+    HasImage::booted as _booted;
+  }
+
   protected $table = "musics";
 
   /**
@@ -13,7 +20,7 @@ class Track extends Model
    *
    * @var array<int, string>
    */
-  protected $fillable = [];
+  protected $fillable = ['name', 'summary', 'lyric', 'quality', 'category_id', 'artist_id'];
 
   /**
    * The attributes that should be hidden for serialization.
@@ -27,7 +34,7 @@ class Track extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = [];
+  protected $appends = ['image_url', 'file_url'];
 
   /**
    * Get the attributes that should be cast.
@@ -36,6 +43,42 @@ class Track extends Model
    */
   protected function casts(): array
   {
-    return [];
+    return ['quality' => 'integer'];
+  }
+
+  /**
+   * The "booted" method of the model.
+   *
+   * @return void
+   */
+  protected static function booted()
+  {
+    static::deleted(function ($model) {
+      $model->_booted();
+      $model->removeFile();
+    });
+  }
+
+  public function getFileUrlAttribute()
+  {
+    return !is_null($this->url) ? Storage::url($this->url) : null;
+  }
+
+  public function removePreviousFile()
+  {
+    if (!($original = $this->getOriginal('url'))) {
+      return true;
+    }
+
+    return Storage::disk('public')->delete($original);
+  }
+
+  public function removeFile()
+  {
+    if (!($path = $this->url)) {
+      return true;
+    }
+
+    return Storage::disk('public')->delete($path);
   }
 }

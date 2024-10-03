@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 class Artist extends Model
 {
+  use Traits\HasImage;
+
   protected $table = "artists";
 
   /**
@@ -51,41 +53,6 @@ class Artist extends Model
   public function getDestroyUrlAttribute()
   {
     return route('api.artists.destroy', [$this]);
-  }
-
-  public function getImageUrlAttribute()
-  {
-    return !is_null($this->image) ? Storage::url($this->image) : null;
-  }
-
-  public function removePreviousImage()
-  {
-    if (!($original = $this->getOriginal('image'))) {
-      return true;
-    }
-
-    return Storage::disk('public')->delete($original);
-  }
-
-  public function removeImage()
-  {
-    if (!($path = $this->image)) {
-      return true;
-    }
-
-    return Storage::disk('public')->delete($path);
-  }
-
-  /**
-   * The "booted" method of the model.
-   *
-   * @return void
-   */
-  protected static function booted()
-  {
-    static::deleted(function ($artist) {
-      $artist->removeImage();
-    });
   }
 
   public function getSlugAttribute()
