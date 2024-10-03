@@ -53,13 +53,14 @@ import { formatDate } from "../../helpers.js";
 import AjaxButton from "../base/AjaxButton.vue";
 import AjaxTable from "../base/Table/AjaxTable.vue";
 import FormButton from "../base/Forms/FormButton.vue";
+import { route } from "vendor/tightenco/ziggy/src/js/index.js";
 
 const table_ref = ref(null);
 
 const { api, currentPage, search } = defineProps({
   api: {
     type: String,
-    default: "/api/users",
+    default: route('api.users'),
   },
   currentPage: {
     type: [Number, String],
