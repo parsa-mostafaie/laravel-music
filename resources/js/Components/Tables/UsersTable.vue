@@ -53,6 +53,7 @@ import { formatDate } from "../../helpers.js";
 import AjaxButton from "../base/AjaxButton.vue";
 import AjaxTable from "../base/Table/AjaxTable.vue";
 import FormButton from "../base/Forms/FormButton.vue";
+import { route } from "vendor/tightenco/ziggy/src/js/index.js";
 
 const table_ref = ref(null);
 
