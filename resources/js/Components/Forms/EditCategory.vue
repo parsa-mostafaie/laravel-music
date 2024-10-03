@@ -56,7 +56,7 @@ const parent_id = ref("");
 
 const modalShown = ref(false);
 
-const form_url = computed(() => `/api/categories/${category_id.value}`);
+const form_url = computed(() => route('api.categories.update', [category_id.value]));
 
 function onSuccess() {
   close();

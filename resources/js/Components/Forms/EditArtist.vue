@@ -57,7 +57,7 @@ const bio = ref("");
 
 const modalShown = ref(false);
 
-const form_url = computed(() => `/api/artists/${artist_id.value}`);
+const form_url = computed(() => route('api.artists.update', [artist_id.value]));
 
 function onSuccess() {
   close();
