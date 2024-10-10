@@ -100,7 +100,7 @@ class TracksController extends Controller
 
       $finfo = $getID3->analyze(Storage::disk('public')->path($track->file));
 
-      if (!empty($finfo['error'])){
+      if (!empty($finfo['error'])) {
         return response($finfo['error'], 500);
       }
 
@@ -129,6 +129,7 @@ class TracksController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
+        ->with('artist', 'category')
         ->paginate(2);
   }
 

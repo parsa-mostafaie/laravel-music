@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\HasImage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class Track extends Model
@@ -80,5 +81,14 @@ class Track extends Model
     }
 
     return Storage::disk('public')->delete($path);
+  }
+
+  public function artist() {
+    return $this->belongsTo(Artist::class);
+  }
+
+  public function category()
+  {
+    return $this->belongsTo(Category::class);
   }
 }

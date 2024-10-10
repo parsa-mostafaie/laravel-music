@@ -1,5 +1,5 @@
 <template>
-  <add-track ref="add_ref"/>
+  <add-track ref="add_ref" />
   <AjaxTable
     :columns="columns"
     id-field="id"
@@ -11,13 +11,35 @@
     <template #column-id="track">
       <a href="#">{{ track.id }}</a>
     </template>
+
+    <template #column-artist="track">
+      <a :href="track.artist.profile_url">{{ track.artist.name }}</a>
+    </template>
+
+    <template #column-category="track">
+      <a :href="track.category.url">{{ track.category.name }}</a>
+    </template>
+
+    <template #column-cover="track">
+      <img :src="track.image_url" width="30" v-if="track.image_url" />
+      <pre v-else>No Image Found</pre>
+    </template>
+
+    <template #column-published_at="track">
+      <template v-if="!track.published_at">
+        <i>Never!</i>
+      </template>
+      <template v-else>{{ formatDate(track.published_at) }}</template>
+    </template>
   </AjaxTable>
 
   <div class="flex gap-1 sm:mt-2 mt-4">
     <form-button variant="primary" @click="reloadTable">Reload</form-button>
 
     <!-- Button trigger modal -->
-    <form-button variant="secondary" @click="add_ref?.show()"> Add </form-button>
+    <form-button variant="secondary" @click="add_ref?.show()">
+      Add
+    </form-button>
   </div>
 </template>
 
@@ -36,7 +58,7 @@ const add_ref = ref(null);
 const { api, currentPage, search } = defineProps({
   api: {
     type: String,
-    default: route('api.tracks'),
+    default: route("api.tracks"),
   },
   currentPage: {
     type: [Number, String],
@@ -61,7 +83,7 @@ const columns = {
   category: "Category",
   published_at: "Publish Date",
   created_at: "Creation Date",
-  updated_at: "Latest Update Date"
+  updated_at: "Latest Update Date",
 };
 
 function reloadTable() {

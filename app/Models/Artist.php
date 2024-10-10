@@ -36,7 +36,7 @@ class Artist extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'follower_count'];
+  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'follower_count', 'tracks_count'];
 
   const UPDATED_AT = null;
 
@@ -84,5 +84,13 @@ class Artist extends Model
 
   public function getFollowerCountAttribute(){
     return $this->followers()->count();
+  }
+
+  public function tracks(){
+    return $this->hasMany(Track::class);
+  }
+
+  public function getTracksCountAttribute(){
+    return $this->tracks()->count();
   }
 }

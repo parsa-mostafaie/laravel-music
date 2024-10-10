@@ -13,7 +13,6 @@ class Category extends Model
    *
    * @var array<int, string>
    */
-  protected $fillable = ['name', 'parent_id'];
 
   /**
    * The attributes that should be hidden for serialization.
@@ -27,7 +26,7 @@ class Category extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['destroy_url'];
+  protected $appends = ['destroy_url', 'url', 'tracks_count'];
 
   const UPDATED_AT = null;
 
@@ -55,5 +54,20 @@ class Category extends Model
   public function childrens()
   {
     return $this->hasMany(static::class, 'parent_id');
+  }
+
+
+  public function tracks()
+  {
+    return $this->hasMany(Track::class);
+  }
+
+  public function getTracksCountAttribute()
+  {
+    return $this->tracks()->count();
+  }
+
+  public function getUrlAttribute(){
+    return '#';
   }
 }

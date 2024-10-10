@@ -13,7 +13,7 @@
   >
     <template #column-parent="{ parent }">
       <template v-if="parent">
-        <Link href="#" class="text-[lightblue]">{{ parent.name }}</Link>
+        <Link href="" class="text-[lightblue]">{{ parent.name }}</Link>
         {{ ' - ' }}
         <b>{{ parent.id }}</b>
       </template>
@@ -35,8 +35,6 @@
         </ajax-button>
         <form-button
           variant="secondary"
-          data-bs-toggle="modal"
-          data-bs-target="#editArtistModal"
           @click="fillEdit(category)"
         >
           Edit
@@ -86,6 +84,7 @@ const columns = {
   id: "#",
   name: "Name",
   parent: "Parent",
+  tracks_count: "Count of tracks",
   createdAt: "Created At",
   actions: "Actions",
 };
