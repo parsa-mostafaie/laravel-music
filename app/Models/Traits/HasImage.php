@@ -10,7 +10,7 @@ trait HasImage
    *
    * @return void
    */
-  protected static function booted()
+  protected static function bootHasImage()
   {
     static::deleted(function ($model) {
       $model->removeImage();

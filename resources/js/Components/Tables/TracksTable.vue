@@ -31,6 +31,18 @@
       </template>
       <template v-else>{{ formatDate(track.published_at) }}</template>
     </template>
+
+    <template #column-actions="track">
+      <AjaxButton
+        :variant="track.published_at ? 'danger' : 'primary'"
+        :href="route('api.tracks.publish', track)"
+        :danger="!!track.published_at"
+        method="put"
+        @refresh="reloadTable"
+      >
+        {{ track.published_at ? "Unpublish" : "Publish" }}
+      </AjaxButton>
+    </template>
   </AjaxTable>
 
   <div class="flex gap-1 sm:mt-2 mt-4">
@@ -84,6 +96,7 @@ const columns = {
   published_at: "Publish Date",
   created_at: "Creation Date",
   updated_at: "Latest Update Date",
+  actions: "Actions",
 };
 
 function reloadTable() {

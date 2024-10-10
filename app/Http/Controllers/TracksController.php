@@ -130,6 +130,7 @@ class TracksController extends Controller
         ["%{$request->get('search')}%"]
       )
         ->with('artist', 'category')
+        ->withoutGlobalScope('published')
         ->paginate(2);
   }
 
@@ -138,5 +139,14 @@ class TracksController extends Controller
     $track->delete();
 
     return response("Track was deleted successfully!", 204);
+  }
+
+  public function publish(Track $track)
+  {
+    if ($track->isPublished()) {
+      return $track->unpublish();
+    }
+
+    return $track->publish();
   }
 }

@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 class Track extends Model
 {
-  use Traits\HasImage {
-    HasImage::booted as _booted;
-  }
+  use Traits\HasImage;
+
+  use Traits\Publishable;
 
   protected $table = "musics";
 
@@ -37,6 +37,8 @@ class Track extends Model
    */
   protected $appends = ['image_url', 'file_url'];
 
+  protected $dates = ['published_at'];
+
   /**
    * Get the attributes that should be cast.
    *
@@ -55,7 +57,6 @@ class Track extends Model
   protected static function booted()
   {
     static::deleted(function ($model) {
-      $model->_booted();
       $model->removeFile();
     });
   }

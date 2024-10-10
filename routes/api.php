@@ -45,6 +45,9 @@ Route::middleware(
     Route::delete('tracks/{track}', [TracksController::class, 'destroy'])
       ->name('api.tracks.destroy');
 
+    Route::put('tracks/{track}/publish', [TracksController::class, 'publish'])
+      ->name('api.tracks.publish');
+
     Route::put('tracks/{track}', [TracksController::class, 'update'])
       ->name('api.tracks.update');
 
