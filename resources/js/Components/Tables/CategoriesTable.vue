@@ -13,7 +13,7 @@
   >
     <template #column-parent="{ parent }">
       <template v-if="parent">
-        <Link href="" class="text-[lightblue]">{{ parent.name }}</Link>
+        <Link :href="parent.url" class="text-[lightblue]">{{ parent.name }}</Link>
         {{ ' - ' }}
         <b>{{ parent.id }}</b>
       </template>
