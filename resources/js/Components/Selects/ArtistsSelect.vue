@@ -1,10 +1,9 @@
 <template>
   <form-select
-    :name="name || 'parent_id'"
-    :options="except( $page.props.categories_select, excludes )"
+    :name="name || 'artist_id'"
+    :options="except($page.props.artists_select, excludes)"
     v-bind="states"
   >
-    <option value v-if="!required">--Independent--</option>
   </form-select>
 </template>
 <script setup>
@@ -15,6 +14,5 @@ const props = defineProps({
   name: {},
   states: { type: Object },
   excludes: { default: [] },
-  required: { type: Boolean, default: false },
 });
 </script>

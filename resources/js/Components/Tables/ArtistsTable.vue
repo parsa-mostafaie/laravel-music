@@ -39,8 +39,6 @@
         </ajax-button>
         <form-button
           variant="secondary"
-          data-bs-toggle="modal"
-          data-bs-target="#editArtistModal"
           @click="fillEdit(artist)"
         >
           Edit
@@ -91,6 +89,7 @@ const columns = {
   name: "Name",
   bio: "Bio",
   image: "Image",
+  tracks_count: "Count of tracks",
   createdAt: "Created At",
   actions: "Actions",
 };

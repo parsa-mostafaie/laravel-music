@@ -17,17 +17,17 @@ return new class extends Migration {
             $table->string('summary')->default('');
             $table->string('lyric')->default('');
 
-            $table->string('cover')->nullable();
+            $table->string('image')->nullable();
 
             $table->bigInteger('time', unsigned: true);
             $table->bigInteger('size', unsigned: true);
-            $table->string('url');
+            $table->string('file');
             $table->integer('quality');
 
             $table->foreignId('artist_id');
             $table->foreignId('category_id');
 
-            $table->timestamp('published_at');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
             $table->foreign('artist_id')

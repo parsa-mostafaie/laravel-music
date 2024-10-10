@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 class Artist extends Model
 {
+  use Traits\HasImage;
+
   protected $table = "artists";
 
   /**
@@ -34,7 +36,7 @@ class Artist extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'follower_count'];
+  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'follower_count', 'tracks_count'];
 
   const UPDATED_AT = null;
 
@@ -51,41 +53,6 @@ class Artist extends Model
   public function getDestroyUrlAttribute()
   {
     return route('api.artists.destroy', [$this]);
-  }
-
-  public function getImageUrlAttribute()
-  {
-    return !is_null($this->image) ? Storage::url($this->image) : null;
-  }
-
-  public function removePreviousImage()
-  {
-    if (!($original = $this->getOriginal('image'))) {
-      return true;
-    }
-
-    return Storage::disk('public')->delete($original);
-  }
-
-  public function removeImage()
-  {
-    if (!($path = $this->image)) {
-      return true;
-    }
-
-    return Storage::disk('public')->delete($path);
-  }
-
-  /**
-   * The "booted" method of the model.
-   *
-   * @return void
-   */
-  protected static function booted()
-  {
-    static::deleted(function ($artist) {
-      $artist->removeImage();
-    });
   }
 
   public function getSlugAttribute()
@@ -117,5 +84,13 @@ class Artist extends Model
 
   public function getFollowerCountAttribute(){
     return $this->followers()->count();
+  }
+
+  public function tracks(){
+    return $this->hasMany(Track::class);
+  }
+
+  public function getTracksCountAttribute(){
+    return $this->tracks()->count();
   }
 }
