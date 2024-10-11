@@ -2,30 +2,71 @@
 
 # Music
 
-Fullstack music website using <a href="https://github.com/vuejs/core" target="_blank">Vue.js</a>, <a href="https://github.com/inertiajs/inertia" target="_blank">Inertia.js</a>, <a href="https://github.com/laravel/laravel" target="_blank">Laravel</a> (<a href="https://github.com/laravel/jetstream" target="_blank">Jetstream</a> Starter Kit), <a href="https://github.com/tailwindlabs/tailwindcss" target="_blank">Tailwind</a>
+Fullstack music website using <a href="https://github.com/vuejs/core" target="blank">Vue.js</a>, <a href="https://github.com/inertiajs/inertia" target="blank">Inertia.js</a>, <a href="https://github.com/laravel/laravel" target="blank">Laravel</a> (<a href="https://github.com/laravel/jetstream" target="blank">Jetstream</a> Starter Kit), <a href="https://github.com/tailwindlabs/tailwindcss" target="_blank">Tailwind CSS</a>.
 
 ## Install Dependencies
 
-Frontend:
+### Frontend:
+
 ```bash
 npm install
 ```
 
-Backend:
+### Backend:
+
 ```bash
 composer install
 ```
 
 ## Run Project
 
-Frontend:
+### Frontend:
+
 ```bash
 npm run dev
 ```
 
-Backend:
+### Backend:
+
 ```bash
 php artisan serve
 ```
 
-Visit [localhost:8000](http://localhost:8000)
+Visit [localhost:8000](localhost:8000) to access the application.
+
+## Environment Configuration
+
+1. Copy the `.env.example` file to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+2. Generate an application key:
+
+```bash
+php artisan key:generate
+```
+   
+
+3. Update your database configuration in the `.env` file.
+
+## Database Migration
+
+Run the following command to migrate the database:
+
+```bash
+php artisan migrate
+```
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgments
+
++ Thanks to the creators of Vue.js, Inertia.js, Laravel, Jetstream, and Tailwind CSS for their amazing frameworks and tools that made this project possible.
