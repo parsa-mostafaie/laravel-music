@@ -70,7 +70,7 @@ class Artist extends Model
 
   public function followers()
   {
-    return $this->hasManyThrough(User::class, Follow::class, 'followed_artist_id', 'id', 'id', 'following_user_id');
+    return $this->belongsToMany(User::class, 'follows', 'followed_artist_id', 'following_user_id');
   }
 
   public function getFollowedAttribute(){
