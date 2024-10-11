@@ -2,12 +2,12 @@
   <DialogModal
     class="fade"
     :show="modalShown"
-    id="editArtistModal"
+    id="editTrackModal"
     @close="close"
   >
     <template #title>
       <div class="flex justify-between">
-        <h5 id="editArtistModalLabel">Edit Artist</h5>
+        <h5 id="editTrackModalLabel">Edit Track</h5>
       </div>
     </template>
     <template #content>
@@ -15,17 +15,32 @@
         @success="onSuccess"
         @reset="reset"
         v-slot="states"
-        :action="form_url"
+        :action="route('api.tracks.update', track)"
         method="put"
       >
         <input-label>Name</input-label>
-        <form-control v-bind="states" name="name" v-model="name" />
+        <form-control v-bind="states" name="name" v-model="track.name"/>
 
-        <input-label class="mt-3">Bio</input-label>
-        <form-text-area v-bind="states" name="bio" v-model="bio" />
+        <input-label class="mt-3">Summary</input-label>
+        <form-text-area v-bind="states" name="summary" v-model="track.summary"/>
+
+        <input-label class="mt-3">Lyric</input-label>
+        <form-text-area v-bind="states" name="lyric" v-model="track.lyric"/>
 
         <input-label class="my-2">Image</input-label>
-        <form-upload v-bind="states" name="image" type="file" />
+        <form-upload v-bind="states" name="cover" type="file" />
+
+        <input-label class="my-2">File</input-label>
+        <form-upload v-bind="states" name="file" type="file" />
+
+        <input-label class="mt-3">Quality</input-label>
+        <form-control v-bind="states" name="quality" v-model="track.quality"/>
+
+        <input-label class="mt-3">Category</input-label>
+        <categories-select name="category_id" v-bind="states" required v-model="track.category_id"/>
+
+        <input-label class="mt-3">Artist</input-label>
+        <artists-select name="artist_id" v-bind="states" required v-model="track.artist_id"/>
 
         <div class="flex gap-1 mt-4">
           <form-button v-bind="states" type="submit" />
@@ -39,7 +54,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { reactive, ref } from "vue";
 import AjaxForm from "../base/Forms/AjaxForm.vue";
 import FormControl from "../base/Forms/FormControl.vue";
 import FormTextArea from "../base/Forms/FormTextArea.vue";
@@ -47,16 +62,14 @@ import FormButton from "../base/Forms/FormButton.vue";
 import DialogModal from "../DialogModal.vue";
 import InputLabel from "@/Components/base/Forms/InputLabel.vue";
 import FormUpload from "../base/Forms/FormUpload.vue";
+import CategoriesSelect from "../Selects/CategoriesSelect.vue";
+import ArtistsSelect from "../Selects/ArtistsSelect.vue";
 
 const emit = defineEmits(["refresh"]);
 
-const artist_id = ref("");
-const name = ref("");
-const bio = ref("");
+const track = reactive({});
 
 const modalShown = ref(false);
-
-const form_url = computed(() => route('api.artists.update', [artist_id.value]));
 
 function onSuccess() {
   close();
@@ -69,9 +82,7 @@ function reset() {
 
 function fill(data = {}, _ = true) {
   _ && show();
-  name.value = data.name ?? "";
-  artist_id.value = data.id ?? "";
-  bio.value = data.bio ?? "";
+  Object.assign(track, data);
 }
 
 function show() {

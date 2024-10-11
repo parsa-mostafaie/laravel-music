@@ -18,9 +18,7 @@ class RoleMiddleware
    */
   public function handle(Request $request, Closure $next, $min = 1, $to = 'view'): Response
   {
-    $min = User::roles[$min];
-
-    if (!Auth::check() || Auth::user()->role < $min) {
+    if (!isA($min)) {
       if (Route::has('login') && $to != 'api') {
         return to_route('login');
       }
