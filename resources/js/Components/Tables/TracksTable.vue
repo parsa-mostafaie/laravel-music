@@ -1,5 +1,7 @@
 <template>
-  <add-track ref="add_ref" />
+  <add-track ref="add_ref" @refresh="reloadTable" />
+  <edit-track ref="edit_ref" @refresh="reloadTable"/>
+
   <AjaxTable
     :columns="columns"
     id-field="id"
@@ -34,6 +36,7 @@
 
     <template #column-actions="track">
       <AjaxButton
+        class="mx-1"
         :variant="track.published_at ? 'danger' : 'primary'"
         :href="route('api.tracks.publish', track)"
         :danger="!!track.published_at"
@@ -42,6 +45,18 @@
       >
         {{ track.published_at ? "Unpublish" : "Publish" }}
       </AjaxButton>
+
+      <form-button variant="secondary" @click="fillEdit(track)">
+        Edit
+      </form-button>
+    </template>
+
+    <template #column-play="track">
+      <template v-if="track.file_url">
+        <audio controls class="h-10 ">
+          <source :src="track.file_url" :type="track.file_mime"/>
+        </audio>
+      </template>
     </template>
   </AjaxTable>
 
@@ -62,6 +77,7 @@ import AjaxTable from "../base/Table/AjaxTable.vue";
 import AjaxButton from "../base/AjaxButton.vue";
 import FormButton from "../base/Forms/FormButton.vue";
 import AddTrack from "../Forms/AddTrack.vue";
+import EditTrack from "../Forms/EditTrack.vue";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);
@@ -88,11 +104,12 @@ const columns = {
   summary: "Summary",
   lyric: "Lyric",
   cover: "Cover Image",
-  time: "Time",
+  time_string: "Time",
   size: "Size",
   quality: "Quality",
   artist: "Artist",
   category: "Category",
+  play: "Player",
   published_at: "Publish Date",
   created_at: "Creation Date",
   updated_at: "Latest Update Date",
@@ -101,5 +118,9 @@ const columns = {
 
 function reloadTable() {
   table_ref.value.reload();
+}
+
+function fillEdit(track) {
+  edit_ref.value.fill(track);
 }
 </script>

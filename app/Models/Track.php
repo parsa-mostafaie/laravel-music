@@ -35,7 +35,7 @@ class Track extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['image_url', 'file_url'];
+  protected $appends = ['image_url', 'file_url', 'file_mime', 'time_string'];
 
   protected $dates = ['published_at'];
 
@@ -84,12 +84,26 @@ class Track extends Model
     return Storage::disk('public')->delete($path);
   }
 
-  public function artist() {
+  public function artist()
+  {
     return $this->belongsTo(Artist::class);
   }
 
   public function category()
   {
     return $this->belongsTo(Category::class);
+  }
+
+  public function getFileMimeAttribute()
+  {
+    if (!$this->file) {
+      return null;
+    }
+
+    return mime_content_type(Storage::disk('public')->path($this->file));
+  }
+
+  public function getTimeStringAttribute(){
+    return \Carbon\CarbonInterval::seconds($this->time)->cascade()->forHumans() ?? '';
   }
 }

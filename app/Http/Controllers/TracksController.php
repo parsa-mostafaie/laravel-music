@@ -22,7 +22,7 @@ class TracksController extends Controller
     ]);
   }
 
-  protected function rules(?Track $track = null)
+  protected function rules(?Track $track = null, $file = "required")
   {
     $unique =
       Rule::unique('musics');
@@ -40,7 +40,7 @@ class TracksController extends Controller
       'summary' => 'nullable|string',
       'lyric' => 'required|string',
       'image' => 'nullable|image|mimes:jpg,png|max:2048',
-      'file' => 'required|mimes:mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav|max:30720',
+      'file' => $file . '|mimes:mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav|max:30720',
       'quality' => 'required|numeric',
       'category_id' => 'required|exists:categories,id',
       'artist_id' => 'required|exists:artists,id',
@@ -114,7 +114,7 @@ class TracksController extends Controller
 
   public function update(Request $request, Track $track)
   {
-    $request->validate($this->rules($track));
+    $request->validate($this->rules($track, 'nullable'));
 
     return response(
       tap($track, fn($track) => $track->update($request->all())),
