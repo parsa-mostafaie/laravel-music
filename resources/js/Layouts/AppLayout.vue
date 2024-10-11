@@ -1,6 +1,7 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import Banner from "@/Components/Banner.vue";
+import ThemeToggle from "@/Components/ThemeToggle.vue";
 
 defineProps({
   title: String,
@@ -12,6 +13,7 @@ import Navigation from "@/Components/Layout/App/Navigation.vue";
 <template>
   <div>
     <Head :title="title" />
+    <theme-toggle/>
 
     <Banner />
 
