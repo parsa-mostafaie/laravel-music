@@ -49,7 +49,7 @@ php artisan key:generate
 ```
    
 
-3. Update your database configuration in the `.env` file.
+3. Update your database, mail configuration in the `.env` file.
 
 ## Database Migration
 
