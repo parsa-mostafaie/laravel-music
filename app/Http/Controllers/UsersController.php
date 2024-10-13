@@ -43,6 +43,7 @@ class UsersController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
+        ->withCount('followings')
         ->paginate(2);
   }
 }

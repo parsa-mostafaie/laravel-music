@@ -44,7 +44,7 @@
         <i v-else>No Biography is Provided!</i>
       </p>
       <template #footer>
-        <default-badge class="-mx-6">{{artist.follower_count}} Followers</default-badge>
+        <default-badge class="-mx-6">{{artist.followers_count}} Followers</default-badge>
       </template>
     </Card>
   </div>

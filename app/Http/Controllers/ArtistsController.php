@@ -82,6 +82,7 @@ class ArtistsController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
+        ->withCount('followers')
         ->paginate(2);
   }
 
@@ -97,6 +98,8 @@ class ArtistsController extends Controller
     if ($slug !== $artist->slug) {
       return redirect(url($artist->profile_url, $request->all()));
     }
+
+    $artist->loadCount('followers');
 
     return inertia('Artists/Profile')
       ->with('artist', $artist);

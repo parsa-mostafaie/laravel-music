@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Overtrue\LaravelFollow\Traits\Follower;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-  use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
+  use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable, Follower;
 
   /**
    * A Array to easy convert any role type (string|number) to int
@@ -134,31 +135,5 @@ class User extends Authenticatable implements MustVerifyEmail
   public static function validateRole($role, $secure = true)
   {
     return min(max(static::roles[$role], static::MIN_ROLE), $secure ? static::MAX_SECURE_ROLE : static::MAX_ROLE);
-  }
-
-  // FOLLOW
-  public function follow(Artist $artist)
-  {
-    if (!$this->isFollowing($artist)) {
-      Follow::create([
-        'followed_artist_id' => $artist->id,
-        'following_user_id' => $this->id
-      ]);
-    }
-  }
-
-  public function unfollow(Artist $artist)
-  {
-    Follow::where(['followed_artist_id'=> $artist->id,'following_user_id'=> $this->id])->delete();
-  }
-
-  public function isFollowing(Artist $artist)
-  {
-    return $this->following()->where('artists.id', $artist->id)->exists();
-  }
-
-  public function following()
-  {
-    return $this->belongsToMany(Artist::class, 'follows', 'following_user_id', 'followed_artist_id');
   }
 }

@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Overtrue\LaravelFollow\Traits\Followable;
 
 class Artist extends Model
 {
-  use Traits\HasImage;
+  use Traits\HasImage, Followable;
 
   protected $table = "artists";
 
@@ -36,7 +37,7 @@ class Artist extends Model
    * 
    * @var array<int, string>
    */
-  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'follower_count', 'tracks_count'];
+  protected $appends = ['destroy_url', 'image_url', 'slug', 'profile_url', 'followed', 'tracks_count'];
 
   const UPDATED_AT = null;
 
@@ -68,22 +69,13 @@ class Artist extends Model
     ]);
   }
 
-  public function followers()
-  {
-    return $this->belongsToMany(User::class, 'follows', 'followed_artist_id', 'following_user_id');
-  }
-
   public function getFollowedAttribute(){
     /**
-     * @var User|null
+     * @var App\Models\User|null
      */
     $user = Auth::user();
 
     return $user && $user->isFollowing($this);
-  }
-
-  public function getFollowerCountAttribute(){
-    return $this->followers()->count();
   }
 
   public function tracks(){

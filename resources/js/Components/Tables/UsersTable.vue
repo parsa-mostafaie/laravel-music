@@ -53,7 +53,6 @@ import { formatDate } from "../../helpers.js";
 import AjaxButton from "../base/AjaxButton.vue";
 import AjaxTable from "../base/Table/AjaxTable.vue";
 import FormButton from "../base/Forms/FormButton.vue";
-import { route } from "vendor/tightenco/ziggy/src/js/index.js";
 
 const table_ref = ref(null);
 
@@ -79,6 +78,7 @@ const columns = {
   email: "Email",
   role_name: "Role",
   everify: "Verify At",
+  followings_count: "Count of Followings",
   created_at: "Created At",
   updated_at: "Updated At",
   actions: "Actions",

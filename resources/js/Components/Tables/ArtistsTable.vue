@@ -63,7 +63,6 @@ import AjaxButton from "../base/AjaxButton.vue";
 import AddArtist from "../Forms/AddArtist.vue";
 import EditArtist from "../Forms/EditArtist.vue";
 import FormButton from "../base/Forms/FormButton.vue";
-import { route } from "vendor/tightenco/ziggy/src/js/index.js";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);
@@ -90,6 +89,7 @@ const columns = {
   bio: "Bio",
   image: "Image",
   tracks_count: "Count of tracks",
+  followers_count: "Count of followers",
   createdAt: "Created At",
   actions: "Actions",
 };
