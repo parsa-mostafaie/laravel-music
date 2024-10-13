@@ -21,7 +21,7 @@
 import InputError from "./InputError.vue";
 
 const model = defineModel();
-const { options, loading, errors, res, name } = defineProps([
+defineProps([
   "options",
   "loading",
   "errors",

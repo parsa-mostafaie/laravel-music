@@ -7,17 +7,12 @@
     v-bind="$attrs"
     v-model="model"
   />
-  <input-error :message="errors[name]" v-if="errors[name]"/>
+  <input-error :message="errors[name]" v-if="errors[name]" />
 </template>
 <script setup>
-import InputError from './InputError.vue';
+import InputError from "./InputError.vue";
 
-const { errors, res, loading, name } = defineProps([
-  "errors",
-  "res",
-  "loading",
-  "name",
-]);
+defineProps(["errors", "res", "loading", "name"]);
 
 const model = defineModel();
 </script>

@@ -6,6 +6,7 @@
 
 <script setup>
 import axios from "axios";
+import { toRefs } from "vue";
 import {
   cancel as cancel_alert,
   dangerWork,
@@ -14,7 +15,7 @@ import {
 } from "../../alerts";
 import FormButton from "./Forms/FormButton.vue";
 
-const { href, color, method, danger } = defineProps({
+const props = defineProps({
   href: {
     type: String,
     required: true,
@@ -32,6 +33,7 @@ const { href, color, method, danger } = defineProps({
     default: false,
   },
 });
+const { href, color, method, danger } = toRefs(props);
 
 const emit = defineEmits(["refresh"]);
 
@@ -39,14 +41,14 @@ async function handleClick() {
   try {
     async function handler() {
       const res = await axios.request({
-        method: method.toUpperCase(),
-        url: href,
+        method: method.value.toUpperCase(),
+        url: href.value,
       });
 
       emit("refresh", res);
     }
 
-    if (danger) {
+    if (danger.value) {
       const res = await dangerWork();
 
       if (!res.isConfirmed) return cancel_alert();

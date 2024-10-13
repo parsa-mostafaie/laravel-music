@@ -37,10 +37,7 @@
         >
           Delete
         </ajax-button>
-        <form-button
-          variant="secondary"
-          @click="fillEdit(artist)"
-        >
+        <form-button variant="secondary" @click="fillEdit(artist)">
           Edit
         </form-button>
       </div>
@@ -68,10 +65,10 @@ const table_ref = ref(null);
 const edit_ref = ref(null);
 const add_ref = ref(null);
 
-const { api, currentPage, search } = defineProps({
+defineProps({
   api: {
     type: String,
-    default: route('api.artists'),
+    default: route("api.artists.show"),
   },
   currentPage: {
     type: [Number, String],

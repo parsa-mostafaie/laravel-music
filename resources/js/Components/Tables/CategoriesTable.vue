@@ -13,8 +13,10 @@
   >
     <template #column-parent="{ parent }">
       <template v-if="parent">
-        <Link :href="parent.url" class="text-[lightblue]">{{ parent.name }}</Link>
-        {{ ' - ' }}
+        <Link :href="parent.url" class="text-[lightblue]">{{
+          parent.name
+        }}</Link>
+        {{ " - " }}
         <b>{{ parent.id }}</b>
       </template>
       <pre v-else>Independent</pre>
@@ -33,10 +35,7 @@
         >
           Delete
         </ajax-button>
-        <form-button
-          variant="secondary"
-          @click="fillEdit(category)"
-        >
+        <form-button variant="secondary" @click="fillEdit(category)">
           Edit
         </form-button>
       </div>
@@ -65,10 +64,10 @@ const table_ref = ref(null);
 const edit_ref = ref(null);
 const add_ref = ref(null);
 
-const { api, currentPage, search } = defineProps({
+defineProps({
   api: {
     type: String,
-    default: route('api.categories'),
+    default: route("api.categories"),
   },
   currentPage: {
     type: [Number, String],

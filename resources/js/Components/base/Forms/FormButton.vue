@@ -7,7 +7,7 @@
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { computed } from "vue";
+import { computed, toRefs } from "vue";
 
 const cases = {
   primary: PrimaryButton,
@@ -15,12 +15,13 @@ const cases = {
   secondary: SecondaryButton,
 };
 
-const component_is = computed(() => cases[variant ?? 'secondary']);
+const component_is = computed(() => cases[variant.value ?? 'secondary']);
 
-const { errors, res, loading, variant } = defineProps([
+const props = defineProps([
   "errors",
   "res",
   "loading",
   "variant",
 ]);
+const { loading, variant } = toRefs(props);
 </script>

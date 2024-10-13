@@ -1,6 +1,6 @@
 <template>
   <add-track ref="add_ref" @refresh="reloadTable" />
-  <edit-track ref="edit_ref" @refresh="reloadTable"/>
+  <edit-track ref="edit_ref" @refresh="reloadTable" />
 
   <AjaxTable
     :columns="columns"
@@ -53,8 +53,8 @@
 
     <template #column-play="track">
       <template v-if="track.file_url">
-        <audio controls class="h-10 ">
-          <source :src="track.file_url" :type="track.file_mime"/>
+        <audio controls class="h-10">
+          <source :src="track.file_url" :type="track.file_mime" />
         </audio>
       </template>
     </template>
@@ -83,7 +83,7 @@ const table_ref = ref(null);
 const edit_ref = ref(null);
 const add_ref = ref(null);
 
-const { api, currentPage, search } = defineProps({
+defineProps({
   api: {
     type: String,
     default: route("api.tracks"),

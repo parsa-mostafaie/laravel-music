@@ -8,7 +8,7 @@
     :search="search"
   >
     <template #column-image="user">
-      <img :src="user.profile_photo_url" class="rounded" width="35"/>
+      <img :src="user.profile_photo_url" class="rounded" width="35" />
     </template>
     <template #column-actions="user">
       <div class="flex gap-1">
@@ -56,10 +56,10 @@ import FormButton from "../base/Forms/FormButton.vue";
 
 const table_ref = ref(null);
 
-const { api, currentPage, search } = defineProps({
+defineProps({
   api: {
     type: String,
-    default: route('api.users'),
+    default: route("api.users"),
   },
   currentPage: {
     type: [Number, String],
