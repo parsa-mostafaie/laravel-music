@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
   public function manage(Request $request)
   {

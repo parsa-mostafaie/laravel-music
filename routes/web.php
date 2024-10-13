@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\ArtistsController;
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PanelController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\TracksController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TrackController;
 
 Route::get('/', function () {
   return Inertia::render('Welcome', [
@@ -38,16 +38,16 @@ Route::middleware([
   Route::middleware('role:manager')
     ->prefix('manager')
     ->group(function () {
-      Route::get('/users', [UsersController::class, 'manage'])
+      Route::get('/users', [UserController::class, 'manage'])
         ->name('manager.users');
 
-      Route::get('/categories', [CategoriesController::class, 'manage'])
+      Route::get('/categories', [CategoryController::class, 'manage'])
         ->name('manager.categories');
 
-      Route::get('/artists', [ArtistsController::class, 'manage'])
+      Route::get('/artists', [ArtistController::class, 'manage'])
         ->name('manager.artists');
 
-      Route::get('/tracks', [TracksController::class, 'manage'])
+      Route::get('/tracks', [TrackController::class, 'manage'])
         ->name('manager.tracks');
 
       Route::get('/', [PanelController::class, 'manager'])
@@ -55,8 +55,8 @@ Route::middleware([
     });
 });
 
-Route::get('artists/{artist}/{slug?}', [ArtistsController::class, 'profile'])
-->name('artists.profile');
+Route::get('artists/{artist}/{slug?}', [ArtistController::class, 'profile'])
+  ->name('artists.profile');
 
 Route::get('/home', PanelController::class)->name('home');
 Route::get('/panel', PanelController::class);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
-class ArtistsController extends Controller
+class ArtistController extends Controller
 {
   public function manage(Request $request)
   {

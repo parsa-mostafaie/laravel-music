@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\ArtistsController;
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FollowController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\TracksController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TrackController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(
@@ -13,55 +13,55 @@ Route::middleware(
   Route::middleware('role:manager,api')->group(function () {
     // Artists
 
-    Route::get('artists', [ArtistsController::class, 'show'])
+    Route::get('artists', [ArtistController::class, 'show'])
       ->name('api.artists');
 
-    Route::delete('artists/{artist}', [ArtistsController::class, 'destroy'])
+    Route::delete('artists/{artist}', [ArtistController::class, 'destroy'])
       ->name('api.artists.destroy');
 
-    Route::put('artists/{artist}', [ArtistsController::class, 'update'])
+    Route::put('artists/{artist}', [ArtistController::class, 'update'])
       ->name('api.artists.update');
 
-    Route::post('artists', [ArtistsController::class, 'store'])
+    Route::post('artists', [ArtistController::class, 'store'])
       ->name('api.artists.store');
 
     // Categories
-    Route::get('categories', [CategoriesController::class, 'show'])
+    Route::get('categories', [CategoryController::class, 'show'])
       ->name('api.categories');
 
-    Route::delete('categories/{category}', [CategoriesController::class, 'destroy'])
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy'])
       ->name('api.categories.destroy');
 
-    Route::put('categories/{category}', [CategoriesController::class, 'update'])
+    Route::put('categories/{category}', [CategoryController::class, 'update'])
       ->name('api.categories.update');
 
-    Route::post('categories', [CategoriesController::class, 'store'])
+    Route::post('categories', [CategoryController::class, 'store'])
       ->name('api.categories.store');
 
     // Track
-    Route::get('tracks', [TracksController::class, 'show'])
+    Route::get('tracks', [TrackController::class, 'show'])
       ->name('api.tracks');
 
-    Route::delete('tracks/{track}', [TracksController::class, 'destroy'])
+    Route::delete('tracks/{track}', [TrackController::class, 'destroy'])
       ->name('api.tracks.destroy');
 
-    Route::put('tracks/{track}/publish', [TracksController::class, 'publish'])
+    Route::put('tracks/{track}/publish', [TrackController::class, 'publish'])
       ->name('api.tracks.publish');
 
-    Route::put('tracks/{track}', [TracksController::class, 'update'])
+    Route::put('tracks/{track}', [TrackController::class, 'update'])
       ->name('api.tracks.update');
 
-    Route::post('tracks', [TracksController::class, 'store'])
+    Route::post('tracks', [TrackController::class, 'store'])
       ->name('api.tracks.store');
 
     // User
-    Route::get('users', [UsersController::class, 'show'])
+    Route::get('users', [UserController::class, 'show'])
       ->name('api.users');
 
-    Route::put('users/{user}/grow', [UsersController::class, 'grow'])
+    Route::put('users/{user}/grow', [UserController::class, 'grow'])
       ->name('api.users.grow');
 
-    Route::put('users/{user}/shrnk', [UsersController::class, 'shrink'])
+    Route::put('users/{user}/shrnk', [UserController::class, 'shrink'])
       ->name('api.users.shrink');
   });
 

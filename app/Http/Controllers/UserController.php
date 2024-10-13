@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
   public function manage(Request $request)
   {
