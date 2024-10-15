@@ -28,6 +28,8 @@ class Category extends Model
    */
   protected $appends = ['destroy_url', 'url', 'tracks_count'];
 
+  protected $fillable = ['name', 'parent_id'];
+
   const UPDATED_AT = null;
 
   /**

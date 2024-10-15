@@ -59,7 +59,7 @@ const table_ref = ref(null);
 defineProps({
   api: {
     type: String,
-    default: route("api.users"),
+    default: route("api.users.index"),
   },
   currentPage: {
     type: [Number, String],

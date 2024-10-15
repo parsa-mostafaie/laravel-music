@@ -67,7 +67,7 @@ const add_ref = ref(null);
 defineProps({
   api: {
     type: String,
-    default: route("api.categories"),
+    default: route("api.categories.index"),
   },
   currentPage: {
     type: [Number, String],

@@ -122,7 +122,7 @@ class TrackController extends Controller
     );
   }
 
-  public function show(Request $request)
+  public function index(Request $request)
   {
     return
       Track::whereRaw(

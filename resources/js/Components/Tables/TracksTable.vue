@@ -86,7 +86,7 @@ const add_ref = ref(null);
 defineProps({
   api: {
     type: String,
-    default: route("api.tracks"),
+    default: route("api.tracks.index"),
   },
   currentPage: {
     type: [Number, String],

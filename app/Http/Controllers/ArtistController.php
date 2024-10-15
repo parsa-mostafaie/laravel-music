@@ -75,7 +75,7 @@ class ArtistController extends Controller
     }
   }
 
-  public function show(Request $request)
+  public function index(Request $request)
   {
     return
       Artist::whereRaw(

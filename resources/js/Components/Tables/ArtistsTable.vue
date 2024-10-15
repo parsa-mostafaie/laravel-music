@@ -68,7 +68,7 @@ const add_ref = ref(null);
 defineProps({
   api: {
     type: String,
-    default: route("api.artists.show"),
+    default: route("api.artists.index"),
   },
   currentPage: {
     type: [Number, String],
