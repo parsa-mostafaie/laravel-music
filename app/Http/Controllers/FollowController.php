@@ -3,22 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FollowRequest;
 use App\Models\Artist;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-    public function follow(Artist $artist)
+    public function follow(FollowRequest $request, Artist $artist)
     {
         $this->user()->follow($artist);
+
+        $artist->loadCount('followers');
 
         return response($artist, 200);
     }
 
-    public function unfollow(Artist $artist)
+    public function unfollow(FollowRequest $request, Artist $artist)
     {
         $this->user()->unfollow($artist);
+
+        $artist->loadCount('followers');
 
         return response($artist, 200);
     }
