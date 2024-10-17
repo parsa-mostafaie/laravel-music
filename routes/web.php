@@ -28,15 +28,13 @@ Route::middleware([
   Route::get('/dashboard', [PanelController::class, 'dashboard'])
     ->name('dashboard');
 
-  Route::middleware('role:admin')
-    ->prefix('admin')
+  Route::prefix('admin')
     ->group(function () {
       Route::get('/', [PanelController::class, 'admin'])
         ->name('admin');
     });
 
-  Route::middleware('role:manager')
-    ->prefix('manager')
+  Route::prefix('manager')
     ->group(function () {
       Route::get('/users', [UserController::class, 'manage'])
         ->name('manager.users');

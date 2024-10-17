@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriesRequest;
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
+use App\Http\Requests\ManagersOnlyRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -9,7 +13,7 @@ use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
-  public function manage(Request $request)
+  public function manage(ManagersOnlyRequest $request)
   {
     return Inertia::render('Manager/Categories', [
       'currentPage' => $request->get('page'),
@@ -18,37 +22,20 @@ class CategoryController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function store(CategoryStoreRequest $request)
   {
-    $request->validate(
-      [
-        'name' => 'required|string|unique:categories',
-        'parent_id' => "nullable|exists:categories,id"
-      ]
-    );
-
     return Category::create($request->all());
   }
-  public function update(Request $request, Category $category)
-  {
-    $request->validate(
-      [
-        'name' => [
-          'required',
-          'string',
-          Rule::unique('categories')->ignore($category->id)
-        ],
-        'parent_id' => "nullable|exists:categories,id|not_in:{$category->id}"
-      ]
-    );
 
+  public function update(CategoryUpdateRequest $request, Category $category)
+  {
     return response(
       tap($category, fn($category) => $category->update($request->all())),
       200
     );
   }
 
-  public function index(Request $request)
+  public function index(ManagersOnlyRequest $request)
   {
     return
       Category::whereRaw(
@@ -59,7 +46,7 @@ class CategoryController extends Controller
         ->paginate(2);
   }
 
-  public function destroy(Category $category)
+  public function destroy(CategoriesRequest $request, Category $category)
   {
     $category->delete();
 

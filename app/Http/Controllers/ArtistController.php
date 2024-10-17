@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArtistsRequest;
+use App\Http\Requests\ArtistStoreRequest;
+use App\Http\Requests\ArtistUpdateRequest;
 use App\Models\Artist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,7 +13,11 @@ use Inertia\Inertia;
 
 class ArtistController extends Controller
 {
-  public function manage(Request $request)
+  use Traits\UploadsImages;
+
+  protected $image_path = 'artist-images';
+
+  public function manage(ArtistsRequest $request)
   {
     return Inertia::render('Manager/Artists', [
       'currentPage' => $request->get('page'),
@@ -18,16 +25,8 @@ class ArtistController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function store(ArtistStoreRequest $request)
   {
-    $request->validate(
-      [
-        'name' => 'required|string|unique:artists,name',
-        'image' => 'nullable|image|mimes:jpg,png|max:2048',
-        'bio' => 'nullable|string'
-      ]
-    );
-
     $artist = new Artist;
 
     $artist->fill($request->all(['name', 'bio']));
@@ -39,20 +38,8 @@ class ArtistController extends Controller
     return $artist;
   }
 
-  public function update(Request $request, Artist $artist)
+  public function update(ArtistUpdateRequest $request, Artist $artist)
   {
-    $request->validate(
-      [
-        'name' => [
-          'required',
-          'string',
-          Rule::unique('artists')->ignore($artist->id)
-        ],
-        'image' => 'nullable|image|mimes:jpg,png|max:2048',
-        'bio' => 'nullable|string'
-      ]
-    );
-
     $artist->fill($request->all(['name', 'bio']));
 
     $this->uploadImage($request, $artist);
@@ -62,20 +49,7 @@ class ArtistController extends Controller
     return response($artist, 200);
   }
 
-  public function uploadImage(Request $request, Artist $artist)
-  {
-    if ($file = $request->file('image')) {
-      $artist->image = $file->store('artist-images', 'public');
-
-      if ($artist->image === false) {
-        return response("Failed To Upload Image!", 500);
-      }
-
-      $artist->removePreviousImage();
-    }
-  }
-
-  public function index(Request $request)
+  public function index(ArtistsRequest $request)
   {
     return
       Artist::whereRaw(
@@ -86,14 +60,14 @@ class ArtistController extends Controller
         ->paginate(2);
   }
 
-  public function destroy(Artist $artist)
+  public function destroy(ArtistsRequest $request, Artist $artist)
   {
     $artist->delete();
 
     return response("Artist was deleted successfully!", 200);
   }
 
-  public function profile(Request $request, Artist $artist, ?string $slug = '')
+  public function profile(ArtistsRequest $request, Artist $artist, ?string $slug = '')
   {
     if ($slug !== $artist->slug) {
       return redirect(url($artist->profile_url, $request->all()));

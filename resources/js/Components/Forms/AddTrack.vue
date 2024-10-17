@@ -15,7 +15,7 @@
         @success="onSuccess"
         @reset="(event) => event.reset()"
         v-slot="states"
-        :action="route('api.tracks.store', {track:null})"
+        :action="route('api.tracks.store')"
         method="post"
       >
         <input-label>Name</input-label>
@@ -28,7 +28,7 @@
         <form-text-area v-bind="states" name="lyric" />
 
         <input-label class="my-2">Image</input-label>
-        <form-upload v-bind="states" name="cover" type="file" />
+        <form-upload v-bind="states" name="image" type="file" />
 
         <input-label class="my-2">File</input-label>
         <form-upload v-bind="states" name="file" type="file" />

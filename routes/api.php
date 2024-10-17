@@ -7,30 +7,26 @@ use App\Http\Controllers\TrackController;
 use App\Http\Controllers\ArtistController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(
-  config('jetstream.middleware', ['web'])
-)->as('api.')->group(function () {
-  Route::middleware('role:manager,api')->group(function () {
-    Route::apiResource('artists', ArtistController::class);
+Route::middleware(['web'])->as('api.')->group(function () {
+  Route::apiResource('artists', ArtistController::class);
 
-    Route::apiResource('categories', CategoryController::class);
+  Route::apiResource('categories', CategoryController::class);
 
-    // Track
-    Route::apiResource('tracks', TrackController::class);
+  // Track
+  Route::apiResource('tracks', TrackController::class);
 
-    Route::put('tracks/{track}/publish', [TrackController::class, 'publish'])
-      ->name('tracks.publish');
+  Route::put('tracks/{track}/publish', [TrackController::class, 'publish'])
+    ->name('tracks.publish');
 
-    // User
-    Route::get('users', [UserController::class, 'show'])
-      ->name('users.index');
+  // User
+  Route::get('users', [UserController::class, 'show'])
+    ->name('users.index');
 
-    Route::put('users/{user}/grow', [UserController::class, 'grow'])
-      ->name('users.grow');
+  Route::put('users/{user}/grow', [UserController::class, 'grow'])
+    ->name('users.grow');
 
-    Route::put('users/{user}/shrnk', [UserController::class, 'shrink'])
-      ->name('users.shrink');
-  });
+  Route::put('users/{user}/shrnk', [UserController::class, 'shrink'])
+    ->name('users.shrink');
 
   // follows
   Route::post('follow/{artist}', [FollowController::class, 'follow'])->name('follow');

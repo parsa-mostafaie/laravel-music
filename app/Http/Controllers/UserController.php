@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ManagersOnlyRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-  public function manage(Request $request)
+  public function manage(ManagersOnlyRequest $request)
   {
     return inertia('Manager/Users', [
       'currentPage' => $request->get('page'),
       'search' => $request->get('search')
     ]);
   }
+
+  public function index(ManagersOnlyRequest $request)
+  {
+    return
+      User::whereRaw(
+        'name LIKE ?',
+        ["%{$request->get('search')}%"]
+      )
+        ->withCount('followings')
+        ->paginate(2);
+  }
+
 
   public function grow(User $user)
   {
@@ -34,16 +47,5 @@ class UserController extends Controller
       $user->role = User::validateRole($user->role - 1);
       $user->save();
     });
-  }
-
-  public function index(Request $request)
-  {
-    return
-      User::whereRaw(
-        'name LIKE ?',
-        ["%{$request->get('search')}%"]
-      )
-        ->withCount('followings')
-        ->paginate(2);
   }
 }

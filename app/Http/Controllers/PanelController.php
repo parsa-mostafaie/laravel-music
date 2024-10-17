@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminsOnlyRequest;
+use App\Http\Requests\ManagersOnlyRequest;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\UsersOnlyRequest;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -22,7 +25,7 @@ class PanelController extends Controller
    *
    * @return \Inertia\Response
    */
-  public function dashboard()
+  public function dashboard(UsersOnlyRequest $request)
   {
     return Inertia::render('Dashboard');
   }
@@ -32,7 +35,7 @@ class PanelController extends Controller
    *
    * @return \Inertia\Response
    */
-  public function admin()
+  public function admin(AdminsOnlyRequest $request)
   {
     return Inertia::render('Admin');
   }
@@ -42,7 +45,7 @@ class PanelController extends Controller
    *
    * @return \Inertia\Response
    */
-  public function manager()
+  public function manager(ManagersOnlyRequest $request)
   {
     return Inertia::render('Manager');
   }
