@@ -90,7 +90,7 @@ class ArtistController extends Controller
   {
     $artist->delete();
 
-    return response("Artist was deleted successfully!", 204);
+    return response("Artist was deleted successfully!", 200);
   }
 
   public function profile(Request $request, Artist $artist, ?string $slug = '')

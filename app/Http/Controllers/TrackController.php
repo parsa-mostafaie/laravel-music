@@ -138,7 +138,7 @@ class TrackController extends Controller
   {
     $track->delete();
 
-    return response("Track was deleted successfully!", 204);
+    return response("Track was deleted successfully!", 200);
   }
 
   public function publish(Track $track)

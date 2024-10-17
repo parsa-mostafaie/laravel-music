@@ -63,6 +63,6 @@ class CategoryController extends Controller
   {
     $category->delete();
 
-    return response("Category was deleted successfully!", 204);
+    return response("Category was deleted successfully!", 200);
   }
 }
