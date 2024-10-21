@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Interfaces\HasImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelFollow\Traits\Followable;
 
-class Artist extends Model
+class Artist extends Model implements HasImage
 {
   use Traits\HasImage, Followable;
 

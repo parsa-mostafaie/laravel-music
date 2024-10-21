@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Traits;
 
+use App\Interfaces\HasImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 trait UploadsImages
 {
-  public function uploadImage(Request $request, Model $model)
+  public function uploadImage(Request $request, HasImage $model)
   {
     if ($file = $request->file('image')) {
       $model->image = $file->store($this->getImagePath(), 'public');

@@ -17,12 +17,12 @@ trait HasImage
     });
   }
 
-  public function getImageUrlAttribute()
+  public function getImageUrlAttribute(): string|null
   {
     return !is_null($this->image) ? Storage::url($this->image) : null;
   }
 
-  public function removePreviousImage()
+  public function removePreviousImage(): bool
   {
     if (!($original = $this->getOriginal('image'))) {
       return true;
@@ -31,7 +31,7 @@ trait HasImage
     return Storage::disk('public')->delete($original);
   }
 
-  public function removeImage()
+  public function removeImage(): bool
   {
     if (!($path = $this->image)) {
       return true;
