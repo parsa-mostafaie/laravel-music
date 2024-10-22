@@ -1,13 +1,19 @@
 <template>
-  <!-- This is an example component -->
   <div class="p-3 flex justify-center">
     <Card class="flex-col max-w-full sm:max-w-[75%] md:max-w-[50%]">
       <template #image v-if="track.image_url">
-        <img
-          class="d-block rounded-lg max-w-full"
-          :src="track.image_url"
-          alt="Image"
-        />
+        <div class="relative">
+          <img
+            class="d-block rounded-lg max-w-full"
+            :src="track.image_url"
+            alt="Image"
+          />
+
+          <category-chaining
+            class="absolute top-1 left-1"
+            :category="track.category"
+          />
+        </div>
       </template>
       <template #header>
         <div class="flex font-normal justify-between items-center">
@@ -35,6 +41,7 @@
   </div>
 </template>
 <script setup>
+import CategoryChaining from "./CategoryChaining.vue";
 import Card from "./Card.vue";
 
 defineProps(["track"]);

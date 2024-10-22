@@ -72,7 +72,7 @@ class TrackController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
-        ->with('artist', 'category')
+        ->with('artist', 'category', 'category.parent')
         ->withoutGlobalScope('published')
         ->paginate(2);
   }
@@ -100,7 +100,7 @@ class TrackController extends Controller
       return redirect(url($track->listen_url, $request->all()));
     }
 
-    $track->load('artist', 'category');
+    $track->load('artist', 'category', 'category.parent');
 
     return inertia('Tracks/Single', compact('track'));
   }
