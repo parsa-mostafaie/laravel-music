@@ -56,5 +56,8 @@ Route::middleware([
 Route::get('artists/{artist}/{slug?}', [ArtistController::class, 'profile'])
   ->name('artists.profile');
 
+Route::get('listen/{track}/{slug?}', [TrackController::class, 'listen'])
+  ->name('tracks.listen');
+
 Route::get('/home', PanelController::class)->name('home');
 Route::get('/panel', PanelController::class);

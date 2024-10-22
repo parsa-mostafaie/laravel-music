@@ -1,12 +1,13 @@
 <template>
   <!-- This is an example component -->
   <div class="p-3 flex justify-center">
-    <Card class="flex justify-start px-3 items-center sm:flex-row flex-col">
+    <Card class="items-center sm:flex-row flex-col">
       <template #image v-if="artist.image_url">
-        <div class="p-5 min-w-[200px]">
+        <div class="p-5">
           <img
-            class="rounded-full"
+            class="min-h-[200px] min-w-[200px] rounded-full"
             width="200"
+            height="200"
             :src="artist.image_url"
             alt="Image"
           />
@@ -44,7 +45,9 @@
         <i v-else>No Biography is Provided!</i>
       </p>
       <template #footer>
-        <default-badge class="-mx-6">{{ artist.followers_count || "No" }} Followers</default-badge>
+        <default-badge class="-mx-6"
+          >{{ artist.followers_count || "No" }} Followers</default-badge
+        >
       </template>
     </Card>
   </div>
@@ -53,7 +56,7 @@
 import { ref } from "vue";
 import Card from "./Card.vue";
 import AjaxButton from "./base/AjaxButton.vue";
-import DefaultBadge from './Badges/DefaultBadge.vue';
+import DefaultBadge from "./Badges/DefaultBadge.vue";
 
 const props = defineProps(["artist"]);
 

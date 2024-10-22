@@ -11,7 +11,7 @@
     :search="search"
   >
     <template #column-id="track">
-      <a href="#">{{ track.id }}</a>
+      <a :href="route('tracks.listen', [track])">{{ track.id }}</a>
     </template>
 
     <template #column-artist="track">

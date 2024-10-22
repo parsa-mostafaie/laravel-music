@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex justify-start p-3"
   >
     <slot name="image" />
     <div class="p-5 grow">

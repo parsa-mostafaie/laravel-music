@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Track extends Model implements HasImage
 {
@@ -103,7 +104,18 @@ class Track extends Model implements HasImage
     return mime_content_type(Storage::disk('public')->path($this->file));
   }
 
-  public function getTimeStringAttribute(){
+  public function getTimeStringAttribute()
+  {
     return \Carbon\CarbonInterval::seconds($this->time)->cascade()->forHumans() ?? '';
+  }
+
+  public function getSlugAttribute()
+  {
+    return Str::slug($this->name);
+  }
+
+  public function getListenUrlAttribute()
+  {
+    return route('tracks.listen', [$this, $this->slug]);
   }
 }
