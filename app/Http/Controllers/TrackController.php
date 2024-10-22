@@ -93,11 +93,14 @@ class TrackController extends Controller
     return $track->publish();
   }
 
-  public function listen(Request $request, Track $track, ?string $slug=null){
+  public function listen(Request $request, Track $track, ?string $slug = null)
+  {
 
     if ($slug !== $track->slug) {
       return redirect(url($track->listen_url, $request->all()));
     }
+
+    $track->load('artist', 'category');
 
     return inertia('Tracks/Single', compact('track'));
   }
