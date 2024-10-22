@@ -18,17 +18,19 @@
       <template #header>
         <div class="flex font-normal justify-between items-center">
           <span class="font-bold">{{ track.name }}</span>
-          <a
-            :href="track.artist.profile_url"
-            class="flex items-center text-slate-400 text-base gap-1"
-          >
-            <img
-              :src="track.artist.image_url"
-              class="h-5 w-auto rounded-lg object-cover"
-              alt="Artist Profile"
-            />
-            {{ track.artist.name }}
-          </a>
+          <default-badge class="m-0 rounded-full">
+            <a
+              :href="track.artist.profile_url"
+              class="flex items-center text-base gap-1"
+            >
+              <img
+                :src="track.artist.image_url"
+                class="h-5 w-auto rounded-lg object-cover"
+                alt="Artist Profile"
+              />
+              {{ track.artist.name }}
+            </a>
+          </default-badge>
         </div>
       </template>
       <p class="sm:max-w-[90%] text-justify">
@@ -42,6 +44,7 @@
 </template>
 <script setup>
 import CategoryChaining from "./CategoryChaining.vue";
+import DefaultBadge from "./Badges/DefaultBadge.vue";
 import Card from "./Card.vue";
 
 defineProps(["track"]);
