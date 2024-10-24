@@ -11,7 +11,7 @@ use Overtrue\LaravelFollow\Traits\Followable;
 
 class Artist extends Model implements HasImage
 {
-  use Traits\HasImage, Followable;
+  use Traits\HasImage, Followable, Traits\HasSlug;
 
   protected $alt_image_size = "1000x1000";
 
@@ -57,11 +57,6 @@ class Artist extends Model implements HasImage
   public function getDestroyUrlAttribute()
   {
     return route('api.artists.destroy', [$this]);
-  }
-
-  public function getSlugAttribute()
-  {
-    return Str::slug($this->name);
   }
 
   public function getProfileUrlAttribute()

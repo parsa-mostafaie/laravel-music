@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Track extends Model implements HasImage
 {
-  use Traits\HasImage;
+  use Traits\HasImage, Traits\HasSlug;
 
   use Traits\Publishable;
 
@@ -109,11 +109,6 @@ class Track extends Model implements HasImage
   public function getTimeStringAttribute()
   {
     return \Carbon\CarbonInterval::seconds($this->time)->cascade()->forHumans() ?? '';
-  }
-
-  public function getSlugAttribute()
-  {
-    return Str::slug($this->name);
   }
 
   public function getListenUrlAttribute()
