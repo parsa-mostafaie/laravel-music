@@ -19,7 +19,7 @@ Route::middleware(['web'])->as('api.')->group(function () {
     ->name('tracks.publish');
 
   // User
-  Route::get('users', [UserController::class, 'show'])
+  Route::get('users', [UserController::class, 'index'])
     ->name('users.index');
 
   Route::put('users/{user}/grow', [UserController::class, 'grow'])
