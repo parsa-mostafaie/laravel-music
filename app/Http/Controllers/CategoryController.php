@@ -42,7 +42,6 @@ class CategoryController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
-        ->with('parent')
         ->paginate(2);
   }
 
