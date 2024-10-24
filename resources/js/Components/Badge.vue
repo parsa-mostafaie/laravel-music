@@ -1,12 +1,11 @@
 <template>
-  <component :is="badgeComponent"><slot /></component>
+  <component :is="currentBadgeComponent"><slot /></component>
 </template>
 
 <script setup>
-import { computed, defineAsyncComponent } from "vue";
+import { defineAsyncComponent, ref, shallowRef, watch, watchEffect } from "vue";
 import { capitalizeFirstLetter } from "@/helpers";
 
-// Define a prop for color
 const props = defineProps({
   variant: {
     type: String,
@@ -14,10 +13,12 @@ const props = defineProps({
   },
 });
 
-// Create a computed property to determine which badge component to load
-const badgeComponent = computed(() => {
-  return defineAsyncComponent(() =>
-    import(`./Badges/${capitalizeFirstLetter(props.variant)}Badge.vue`)
+const currentBadgeComponent = shallowRef(null);
+
+watchEffect(async () => {
+  const normalizedVariant = capitalizeFirstLetter(props.variant);
+  currentBadgeComponent.value = defineAsyncComponent(() =>
+    import(`./Badges/${normalizedVariant}Badge.vue`)
   );
 });
 </script>
