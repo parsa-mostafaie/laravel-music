@@ -51,7 +51,7 @@ async function submitHandler(event) {
       location.href = response.request.responseURL;
     }
 
-    emit('success');
+    emit('success', response);
   } catch (_error) {
     if (isAxiosError(_error) && _error.response.status == 422) {
       errors.value = _error.response.data.errors;

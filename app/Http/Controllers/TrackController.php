@@ -86,10 +86,12 @@ class TrackController extends Controller
   public function publish(TracksRequest $request, Track $track)
   {
     if ($track->isPublished()) {
-      return $track->unpublish();
+      $track->unpublish();
+    } else {
+      $track->publish();
     }
 
-    return $track->publish();
+    return $track;
   }
 
   public function listen(Request $request, Track $track, ?string $slug = null)
