@@ -67,7 +67,7 @@ class ArtistController extends Controller
     return response("Artist was deleted successfully!", 200);
   }
 
-  public function profile(ArtistsRequest $request, Artist $artist, ?string $slug = '')
+  public function profile(Request $request, Artist $artist, ?string $slug = '')
   {
     if ($slug !== $artist->slug) {
       return redirect(url($artist->profile_url, $request->all()));
