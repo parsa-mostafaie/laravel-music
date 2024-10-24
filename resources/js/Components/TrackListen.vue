@@ -37,7 +37,10 @@
           <Link :href="track.listen_url" class="font-bold">{{
             track.name
           }}</Link>
-          <default-badge class="m-0 rounded-full">
+          <Badge
+            :variant="track.artist.followed ? 'green' : 'default'"
+            class="m-0 rounded-full"
+          >
             <Link
               :href="track.artist.profile_url"
               class="flex items-center text-base gap-1"
@@ -49,7 +52,7 @@
               />
               {{ track.artist.name }}
             </Link>
-          </default-badge>
+          </Badge>
         </div>
       </template>
       <p class="sm:max-w-[90%] text-justify">
@@ -74,13 +77,21 @@ import FormButton from "./base/Forms/FormButton.vue";
 import AjaxButton from "./base/AjaxButton.vue";
 import EditTrack from "./Forms/EditTrack.vue";
 import CategoryChaining from "./CategoryChaining.vue";
-import DefaultBadge from "./Badges/DefaultBadge.vue";
 import Card from "./Card.vue";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { Link } from "@inertiajs/vue3";
+import Badge from "./Badge.vue";
 
 const props = defineProps(["track"]); // Keep track as props
-const track = ref({ ...props.track }); // Create a local ref
+const track = ref(props.track); // Create a local ref
+
+watchEffect(() => {
+  track.value = props.track; // Automatically updates when props.track changes
+});
+
+watchEffect(() => {
+  console.log(track.value.artist.followed)
+})
 
 const edit_ref = ref(null);
 
