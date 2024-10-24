@@ -45,3 +45,7 @@ export function except(list, _) {
 
   return copy;
 }
+
+export function capitalizeFirstLetter(str) {
+  return str.replace(/^./, (match) => match.toUpperCase());
+}
