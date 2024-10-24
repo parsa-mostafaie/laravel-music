@@ -12,7 +12,7 @@
     :search="search"
   >
     <template #column-id="artist">
-      <a :href="artist.profile_url">{{ artist.id }}</a>
+      <Link :href="artist.profile_url">{{ artist.id }}</Link>
     </template>
     <template #column-bio="artist">
       <p style="max-width: 150px" :title="artist.bio" class="text-truncate">
@@ -60,6 +60,7 @@ import AjaxButton from "../base/AjaxButton.vue";
 import AddArtist from "../Forms/AddArtist.vue";
 import EditArtist from "../Forms/EditArtist.vue";
 import FormButton from "../base/Forms/FormButton.vue";
+import { Link } from "@inertiajs/vue3";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);

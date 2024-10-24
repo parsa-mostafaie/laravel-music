@@ -36,7 +36,7 @@
         <div class="flex font-normal justify-between items-center">
           <span class="font-bold">{{ track.name }}</span>
           <default-badge class="m-0 rounded-full">
-            <a
+            <Link
               :href="track.artist.profile_url"
               class="flex items-center text-base gap-1"
             >
@@ -46,7 +46,7 @@
                 alt="Artist Profile"
               />
               {{ track.artist.name }}
-            </a>
+            </Link>
           </default-badge>
         </div>
       </template>
@@ -74,6 +74,7 @@ import CategoryChaining from "./CategoryChaining.vue";
 import DefaultBadge from "./Badges/DefaultBadge.vue";
 import Card from "./Card.vue";
 import { ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps(["track"]); // Keep track as props
 const track = ref({ ...props.track }); // Create a local ref

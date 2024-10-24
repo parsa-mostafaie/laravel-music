@@ -11,15 +11,15 @@
     :search="search"
   >
     <template #column-id="track">
-      <a :href="route('tracks.listen', [track])">{{ track.id }}</a>
+      <Link :href="route('tracks.listen', [track])">{{ track.id }}</Link>
     </template>
 
     <template #column-artist="track">
-      <a :href="track.artist.profile_url">{{ track.artist.name }}</a>
+      <Link :href="track.artist.profile_url">{{ track.artist.name }}</Link>
     </template>
 
     <template #column-category="track">
-      <CategoryChaining :category="track.category" />
+      <a :href="track.category.url">{{ track.category.name }}</a>
     </template>
 
     <template #column-cover="track">
@@ -79,6 +79,7 @@ import FormButton from "../base/Forms/FormButton.vue";
 import AddTrack from "../Forms/AddTrack.vue";
 import EditTrack from "../Forms/EditTrack.vue";
 import CategoryChaining from "../CategoryChaining.vue";
+import { Link } from "@inertiajs/vue3";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);
