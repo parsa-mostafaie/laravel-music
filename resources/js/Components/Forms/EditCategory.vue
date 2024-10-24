@@ -15,17 +15,17 @@
         @success="onSuccess"
         @reset="reset"
         v-slot="states"
-        :action="form_url"
+        :action="route('api.categories.update', category)"
         method="put"
       >
         <input-label>Name</input-label>
-        <form-control v-bind="states" name="name" v-model="name" />
+        <form-control v-bind="states" name="name" v-model="category.name" />
 
         <input-label class="mt-2">Parent Category</input-label>
         <categories-select
           :states="states"
-          v-model="parent_id"
-          :excludes="[category_id]"
+          v-model="category.parent_id"
+          :excludes="[category.id]"
         />
 
         <div class="flex gap-1 mt-4">
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { reactive, ref } from "vue";
 import AjaxForm from "../base/Forms/AjaxForm.vue";
 import FormControl from "../base/Forms/FormControl.vue";
 import FormButton from "../base/Forms/FormButton.vue";
@@ -50,13 +50,9 @@ import CategoriesSelect from "../Selects/CategoriesSelect.vue";
 
 const emit = defineEmits(["refresh"]);
 
-const category_id = ref("");
-const name = ref("");
-const parent_id = ref("");
+const category = reactive({});
 
 const modalShown = ref(false);
-
-const form_url = computed(() => route('api.categories.update', [category_id.value]));
 
 function onSuccess() {
   close();
@@ -69,9 +65,7 @@ function reset() {
 
 function fill(data = {}, _ = true) {
   _ && show();
-  name.value = data.name ?? "";
-  category_id.value = data.id ?? "";
-  parent_id.value = data.parent_id ?? "";
+  Object.assign(category, data);
 }
 
 function show() {

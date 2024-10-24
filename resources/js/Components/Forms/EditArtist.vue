@@ -15,14 +15,14 @@
         @success="onSuccess"
         @reset="reset"
         v-slot="states"
-        :action="form_url"
+        :action="route('api.artists.update', artist)"
         method="put"
       >
         <input-label>Name</input-label>
-        <form-control v-bind="states" name="name" v-model="name" />
+        <form-control v-bind="states" name="name" v-model="artist.name" />
 
         <input-label class="mt-3">Bio</input-label>
-        <form-text-area v-bind="states" name="bio" v-model="bio" />
+        <form-text-area v-bind="states" name="bio" v-model="artist.bio" />
 
         <input-label class="my-2">Image</input-label>
         <form-upload v-bind="states" name="image" type="file" />
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { reactive, ref } from "vue";
 import AjaxForm from "../base/Forms/AjaxForm.vue";
 import FormControl from "../base/Forms/FormControl.vue";
 import FormTextArea from "../base/Forms/FormTextArea.vue";
@@ -50,13 +50,9 @@ import FormUpload from "../base/Forms/FormUpload.vue";
 
 const emit = defineEmits(["refresh"]);
 
-const artist_id = ref("");
-const name = ref("");
-const bio = ref("");
+const artist = reactive({});
 
 const modalShown = ref(false);
-
-const form_url = computed(() => route('api.artists.update', [artist_id.value]));
 
 function onSuccess() {
   close();
@@ -69,9 +65,7 @@ function reset() {
 
 function fill(data = {}, _ = true) {
   _ && show();
-  name.value = data.name ?? "";
-  artist_id.value = data.id ?? "";
-  bio.value = data.bio ?? "";
+  Object.assign(artist, data);
 }
 
 function show() {
