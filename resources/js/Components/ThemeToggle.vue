@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-4 left-4 dark:bg-gray-950 rounded-lg">
+  <div class="fixed bottom-4 left-4 dark:bg-gray-950 rounded-lg z-[9999]">
     <button
       @click="toggleTheme"
       @contextmenu.prevent="themeFromSystem"
