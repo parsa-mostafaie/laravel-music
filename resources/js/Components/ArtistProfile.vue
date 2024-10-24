@@ -62,7 +62,6 @@
           v-for="track in artist.tracks"
           :track
           class="max-w-sm"
-          :full="true"
         />
       </div>
     </div>
