@@ -36,7 +36,7 @@ class Track extends Model implements HasImage
    * 
    * @var array<int, string>
    */
-  protected $appends = ['image_url', 'file_url', 'file_mime', 'time_string'];
+  protected $appends = ['image_url', 'file_url', 'file_mime', 'time_string', 'listen_url'];
 
   protected $with = ['artist', 'category'];
 

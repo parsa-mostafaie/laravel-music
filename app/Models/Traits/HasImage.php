@@ -19,7 +19,7 @@ trait HasImage
 
   public function getImageUrlAttribute(): string|null
   {
-    return !is_null($this->image) ? Storage::url($this->image) : null;
+    return !is_null($this->image) ? Storage::url($this->image) : $this->getAlternativeImage();
   }
 
   public function removePreviousImage(): bool
@@ -38,5 +38,13 @@ trait HasImage
     }
 
     return Storage::disk('public')->delete($path);
+  }
+
+  public function getAlternativeImageSize(): string{
+    return property_exists($this, 'alt_image_size') ? $this->alt_image_size : '300x200';
+  }
+
+  public function getAlternativeImage(): string|null{
+    return "https://placehold.co/{$this->getAlternativeImageSize()}?text=No+Image+Found";
   }
 }

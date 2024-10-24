@@ -3,11 +3,11 @@
     <Teleport to="body" v-if="$page.props['is-manager']">
       <edit-track ref="edit_ref" @refresh="refreshTrack" />
     </Teleport>
-    <Card class="flex-col max-w-full sm:max-w-[75%] md:max-w-[50%]">
+    <Card class="flex-col w-full max-w-xl">
       <template #image v-if="track.image_url">
         <div class="relative">
           <img
-            class="d-block rounded-lg max-w-full"
+            class="d-block rounded-lg max-w-full w-full"
             :src="track.image_url"
             alt="Image"
           />
@@ -34,7 +34,9 @@
       </template>
       <template #header>
         <div class="flex font-normal justify-between items-center">
-          <span class="font-bold">{{ track.name }}</span>
+          <Link :href="track.listen_url" class="font-bold">{{
+            track.name
+          }}</Link>
           <default-badge class="m-0 rounded-full">
             <Link
               :href="track.artist.profile_url"
@@ -60,7 +62,8 @@
       </p>
       <p class="text-xl text-slate-300 font-bold">Lyric</p>
       {{ track.lyric }}
-      <audio controls class="mt-2 w-[75%] mx-auto">
+
+      <audio controls class="mt-2 w-full">
         <source :src="track.file_url" :type="track.file_mime" />
       </audio>
     </Card>

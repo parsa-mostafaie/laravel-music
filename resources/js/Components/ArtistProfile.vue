@@ -1,6 +1,6 @@
 <template>
   <!-- This is an example component -->
-  <div class="p-3 flex justify-center">
+  <div class="p-5 flex flex-col items-center">
     <Card class="items-center sm:flex-row flex-col">
       <template #image v-if="artist.image_url">
         <div class="p-5">
@@ -50,6 +50,22 @@
         >
       </template>
     </Card>
+    <div v-if="artist.tracks.length || 0">
+      <p
+        class="text-center font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mt-5"
+      >
+        {{ artist.name }}'s Tracks
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-wrap">
+        <TrackListen
+          :key="track.id"
+          v-for="track in artist.tracks"
+          :track
+          class="max-w-sm"
+          :full="true"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -57,6 +73,7 @@ import { ref } from "vue";
 import Card from "./Card.vue";
 import AjaxButton from "./base/AjaxButton.vue";
 import DefaultBadge from "./Badges/DefaultBadge.vue";
+import TrackListen from "./TrackListen.vue";
 
 const props = defineProps(["artist"]);
 

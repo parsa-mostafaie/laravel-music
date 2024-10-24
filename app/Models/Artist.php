@@ -13,6 +13,8 @@ class Artist extends Model implements HasImage
 {
   use Traits\HasImage, Followable;
 
+  protected $alt_image_size = "1000x1000";
+
   protected $table = "artists";
 
   /**
