@@ -6,6 +6,7 @@ use App\Http\Requests\ArtistsRequest;
 use App\Http\Requests\ArtistStoreRequest;
 use App\Http\Requests\ArtistUpdateRequest;
 use App\Models\Artist;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -77,6 +78,10 @@ class ArtistController extends Controller
     $artist->load('tracks');
 
     return inertia('Artists/Profile')
-      ->with('artist', $artist);
+      ->with('artist', $artist)
+      ->with([
+        'artists_select' => Artist::pluck('name', 'id'),
+        'categories_select' => Category::pluck('name', 'id')
+      ]);
   }
 }
