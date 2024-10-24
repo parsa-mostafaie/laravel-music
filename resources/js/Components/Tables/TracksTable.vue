@@ -11,7 +11,7 @@
     :search="search"
   >
     <template #column-id="track">
-      <a href="#">{{ track.id }}</a>
+      <a :href="route('tracks.listen', [track])">{{ track.id }}</a>
     </template>
 
     <template #column-artist="track">
@@ -19,7 +19,7 @@
     </template>
 
     <template #column-category="track">
-      <a :href="track.category.url">{{ track.category.name }}</a>
+      <CategoryChaining :category="track.category" />
     </template>
 
     <template #column-cover="track">
@@ -78,6 +78,7 @@ import AjaxButton from "../base/AjaxButton.vue";
 import FormButton from "../base/Forms/FormButton.vue";
 import AddTrack from "../Forms/AddTrack.vue";
 import EditTrack from "../Forms/EditTrack.vue";
+import CategoryChaining from "../CategoryChaining.vue";
 
 const table_ref = ref(null);
 const edit_ref = ref(null);

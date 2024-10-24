@@ -62,7 +62,7 @@ class TrackController extends Controller
 
     $track->save();
 
-    return response($track, 200);
+    return response($track->fresh(), 200);
   }
 
   public function index(TracksRequest $request)
@@ -72,7 +72,6 @@ class TrackController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
-        ->with('artist', 'category')
         ->withoutGlobalScope('published')
         ->paginate(2);
   }
@@ -87,9 +86,28 @@ class TrackController extends Controller
   public function publish(TracksRequest $request, Track $track)
   {
     if ($track->isPublished()) {
-      return $track->unpublish();
+      $track->unpublish();
+    } else {
+      $track->publish();
     }
 
-    return $track->publish();
+    return $track;
+  }
+
+  public function listen(Request $request, Track $track, ?string $slug = null)
+  {
+
+    if ($slug !== $track->slug) {
+      return redirect(url($track->listen_url, $request->all()));
+    }
+
+    return inertia(
+      'Tracks/Single',
+      [
+        'track' => $track,
+        'artists_select' => Artist::pluck('name', 'id'),
+        'categories_select' => Category::pluck('name', 'id')
+      ]
+    );
   }
 }

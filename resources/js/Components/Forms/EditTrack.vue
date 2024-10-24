@@ -71,9 +71,9 @@ const track = reactive({});
 
 const modalShown = ref(false);
 
-function onSuccess() {
+function onSuccess(response) {
   close();
-  emit("refresh");
+  emit("refresh", response);
 }
 
 function reset() {
