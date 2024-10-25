@@ -89,10 +89,6 @@ watchEffect(() => {
   track.value = props.track; // Automatically updates when props.track changes
 });
 
-watchEffect(() => {
-  console.log(track.value.artist.followed)
-})
-
 const edit_ref = ref(null);
 
 function openEdit() {
