@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers\Traits;
 
+use App\Interfaces\HasAudioFile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 trait UploadsMusicFiles
 {
-  public function uploadFile(Request $request, Model $model)
+  public function uploadFile(Request $request, HasAudioFile $model)
   {
     if ($file = $request->file('file')) {
       $model->file = $file->store($this->getMusicPath(), 'public');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\HasAudioFile;
 use App\Interfaces\HasImage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -9,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class Track extends Model implements HasImage
+class Track extends Model implements HasImage, HasAudioFile
 {
-  use Traits\HasImage, Traits\HasSlug;
+  use Traits\HasImage, Traits\HasSlug, Traits\HasAudioFile;
 
   use Traits\Publishable;
 
@@ -59,32 +60,6 @@ class Track extends Model implements HasImage
    */
   protected static function booted()
   {
-    static::deleted(function ($model) {
-      $model->removeFile();
-    });
-  }
-
-  public function getFileUrlAttribute()
-  {
-    return !is_null($this->file) ? Storage::url($this->file) : null;
-  }
-
-  public function removePreviousFile()
-  {
-    if (!($original = $this->getOriginal('file'))) {
-      return true;
-    }
-
-    return Storage::disk('public')->delete($original);
-  }
-
-  public function removeFile()
-  {
-    if (!($path = $this->file)) {
-      return true;
-    }
-
-    return Storage::disk('public')->delete($path);
   }
 
   public function artist()
@@ -95,20 +70,6 @@ class Track extends Model implements HasImage
   public function category()
   {
     return $this->belongsTo(Category::class);
-  }
-
-  public function getFileMimeAttribute()
-  {
-    if (!$this->file) {
-      return null;
-    }
-
-    return mime_content_type(Storage::disk('public')->path($this->file));
-  }
-
-  public function getTimeStringAttribute()
-  {
-    return \Carbon\CarbonInterval::seconds($this->time)->cascade()->forHumans() ?? '';
   }
 
   public function getListenUrlAttribute()
