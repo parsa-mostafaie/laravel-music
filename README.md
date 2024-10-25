@@ -6,13 +6,13 @@ Fullstack music website using <a href="https://github.com/vuejs/core" target="bl
 
 ## Install Dependencies
 
-### Frontend:
+### Frontend
 
 ```bash
 npm install
 ```
 
-### Backend:
+### Backend
 
 ```bash
 composer install
@@ -20,19 +20,11 @@ composer install
 
 ## Run Project
 
-### Frontend:
-
 ```bash
-npm run dev
+npm start
 ```
 
-### Backend:
-
-```bash
-php artisan serve
-```
-
-Visit [localhost:8000](localhost:8000) to access the application.
+Visit [localhost:8000](http://localhost:8000) to access the application.
 
 ## Environment Configuration
 

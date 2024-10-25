@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "start": "npx concurrently \"php artisan serve\" \"npm run dev\" -c \"bgRed.bold,bgGreen.bold\" --names=server,vite"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.14",
@@ -12,6 +13,7 @@
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.16",
         "axios": "^1.7.7",
+        "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.32",
         "sweetalert2": "^11.12.4",
