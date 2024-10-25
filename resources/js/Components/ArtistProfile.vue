@@ -50,21 +50,6 @@
         >
       </template>
     </Card>
-    <div v-if="artist.tracks.length || 0">
-      <p
-        class="text-center font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mt-5"
-      >
-        {{ artist.name }}'s Tracks
-      </p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-wrap">
-        <TrackListen
-          :key="track.id"
-          v-for="track in artist.tracks"
-          :track
-          class="max-w-sm"
-        />
-      </div>
-    </div>
   </div>
 </template>
 <script setup>
