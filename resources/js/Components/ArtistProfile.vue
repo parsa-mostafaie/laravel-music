@@ -57,7 +57,6 @@ import { ref } from "vue";
 import Card from "./Card.vue";
 import AjaxButton from "./base/AjaxButton.vue";
 import DefaultBadge from "./Badges/DefaultBadge.vue";
-import TrackListen from "./TrackListen.vue";
 
 const props = defineProps(["artist"]);
 
