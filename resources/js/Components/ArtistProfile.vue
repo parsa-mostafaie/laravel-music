@@ -50,19 +50,59 @@
         >
       </template>
     </Card>
+    <div v-if="artist.latest_tracks.length || 0">
+      <p
+        class="text-center font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mt-5"
+      >
+        {{ artist.name }}'s Tracks
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-wrap">
+        <TrackListen
+          v-for="track in artist.latest_tracks"
+          :key="track.id"
+          :track
+          @refresh="listenUpdate"
+          class="max-w-sm"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import Card from "./Card.vue";
 import AjaxButton from "./base/AjaxButton.vue";
 import DefaultBadge from "./Badges/DefaultBadge.vue";
+import { router } from "@inertiajs/vue3";
+import TrackListen from "./TrackListen.vue";
 
 const props = defineProps(["artist"]);
 
 const artist = ref(props.artist);
 
+watchEffect(() => {
+  artist.value = props.artist; // Automatically updates when props.artist changes
+});
+
 function refresh(response) {
   artist.value = response.data;
+}
+
+function listenUpdate(response, prev_track, ignore, force_ignore) {
+  // force ignore means artist action for now (may changed in future)
+  if (!force_ignore) {
+    const prev_artist = prev_track.value.artist;
+    const current_artist = response.data.artist;
+
+    if (
+      prev_artist.id == current_artist.id &&
+      prev_artist.ifollowed == current_artist.followed
+    )
+      return;
+  }
+
+  router.reload();
+
+  ignore();
 }
 </script>

@@ -50,7 +50,7 @@ class Track extends Model implements HasImage, HasAudioFile
    */
   protected function casts(): array
   {
-    return ['quality' => 'integer'];
+    return ['quality' => 'string'];
   }
 
   /**

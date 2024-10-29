@@ -15,7 +15,7 @@ class FollowController extends Controller
         $this->user()->follow($artist);
 
         $artist->loadCount('followers');
-        $artist->load('tracks');
+        $artist->load('latest_tracks');
 
         return response($artist, 200);
     }
@@ -25,7 +25,7 @@ class FollowController extends Controller
         $this->user()->unfollow($artist);
 
         $artist->loadCount('followers');
-        $artist->load('tracks');
+        $artist->load('latest_tracks');
 
         return response($artist, 200);
     }

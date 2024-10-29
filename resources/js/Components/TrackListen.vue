@@ -33,27 +33,34 @@
         </div>
       </template>
       <template #header>
-        <div class="flex font-normal justify-between items-center">
-          <Link :href="track.listen_url" class="font-bold">{{
-            track.name
-          }}</Link>
-          <Badge
-            :variant="track.artist.followed ? 'green' : 'default'"
-            class="m-0 rounded-full"
+        <div
+          class="mb-3 border-b-2 border-black rounded dark:border-white p-3 pt-0 flex justify-between"
+        >
+          <Link
+            :href="track.artist.profile_url"
+            class="flex items-center text-base gap-1"
           >
-            <Link
-              :href="track.artist.profile_url"
-              class="flex items-center text-base gap-1"
-            >
-              <img
-                :src="track.artist.image_url"
-                class="h-5 w-auto rounded-lg object-cover"
-                alt="Artist Profile"
-              />
-              {{ track.artist.name }}
-            </Link>
-          </Badge>
+            <img
+              :src="track.artist.image_url"
+              class="h-6 w-auto inline-block rounded-lg object-cover"
+              alt="Artist Profile"
+            />
+            {{ track.artist.name }}
+          </Link>
+          <ajax-button
+            :href="
+              route(track.artist.followed ? 'api.unfollow' : 'api.follow', {
+                artist: track.artist,
+              })
+            "
+            method="post"
+            @refresh="getRefresher(true)(...arguments)"
+            :color="track.artist.followed ? 'danger' : 'primary'"
+          >
+            {{ track.artist.followed ? "Followed" : "Follow" }}
+          </ajax-button>
         </div>
+        <Link :href="track.listen_url" class="font-bold">{{ track.name }}</Link>
       </template>
       <p class="sm:max-w-[90%] text-justify">
         <template v-if="track.summary">{{ track.summary }}</template>
@@ -80,10 +87,14 @@ import CategoryChaining from "./CategoryChaining.vue";
 import Card from "./Card.vue";
 import { ref, watchEffect } from "vue";
 import { Link } from "@inertiajs/vue3";
-import Badge from "./Badge.vue";
 
 const props = defineProps(["track"]); // Keep track as props
 const track = ref(props.track); // Create a local ref
+const emit = defineEmits(["refresh"]);
+
+watchEffect(() => {
+  console.log(track.value.artist);
+})
 
 watchEffect(() => {
   track.value = props.track; // Automatically updates when props.track changes
@@ -95,7 +106,21 @@ function openEdit() {
   edit_ref.value.fill(track.value);
 }
 
-function refreshTrack(response) {
-  track.value = response.data;
+function getRefresher(force_ignore = false) {
+  return function (response) {
+    let ignored = force_ignore;
+
+    function ignore(value = true) {
+      if (!force_ignore) ignored = value;
+    }
+
+    emit("refresh", response, track, ignore, force_ignore);
+
+    if (!ignored) track.value = response.data;
+  };
+}
+
+function refreshTrack() {
+  return getRefresher()(...arguments);
 }
 </script>

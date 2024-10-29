@@ -75,7 +75,7 @@ class ArtistController extends Controller
     }
 
     $artist->loadCount('followers');
-    $artist->load('tracks');
+    $artist->load('latest_tracks');
 
     return inertia('Artists/Profile')
       ->with('artist', $artist)

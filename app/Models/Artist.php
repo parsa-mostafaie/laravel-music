@@ -77,7 +77,11 @@ class Artist extends Model implements HasImage
   }
 
   public function tracks(){
-    return $this->hasMany(Track::class);
+    return $this->hasMany(Track::class)->latest('created_at');
+  }
+
+  public function latest_tracks(){
+    return $this->tracks()->take(5);
   }
 
   public function getTracksCountAttribute(){
