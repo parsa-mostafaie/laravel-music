@@ -47,18 +47,7 @@
             />
             {{ track.artist.name }}
           </Link>
-          <ajax-button
-            :href="
-              route(track.artist.followed ? 'api.unfollow' : 'api.follow', {
-                artist: track.artist,
-              })
-            "
-            method="post"
-            @refresh="getRefresher(true)(...arguments)"
-            :color="track.artist.followed ? 'danger' : 'primary'"
-          >
-            {{ track.artist.followed ? "Followed" : "Follow" }}
-          </ajax-button>
+          <FollowButton :artist="track.artist" @refresh="getRefresher(true)(...arguments)"/>
         </div>
         <Link :href="track.listen_url" class="font-bold">{{ track.name }}</Link>
       </template>
@@ -87,14 +76,11 @@ import CategoryChaining from "./CategoryChaining.vue";
 import Card from "./Card.vue";
 import { ref, watchEffect } from "vue";
 import { Link } from "@inertiajs/vue3";
+import FollowButton from "./Tracks/FollowButton.vue";
 
 const props = defineProps(["track"]); // Keep track as props
 const track = ref(props.track); // Create a local ref
 const emit = defineEmits(["refresh"]);
-
-watchEffect(() => {
-  console.log(track.value.artist);
-})
 
 watchEffect(() => {
   track.value = props.track; // Automatically updates when props.track changes

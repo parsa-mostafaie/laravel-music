@@ -19,24 +19,10 @@
             {{ artist.name }}
           </h5>
           <div class="flex gap-1" v-if="$page.props.auth.user">
-            <ajax-button
-              variant="secondary"
-              method="post"
-              :href="route('api.follow', { artist })"
-              v-if="!artist.followed"
+            <FollowButton
+              :artist="artist"
               @refresh="refresh"
-            >
-              Follow
-            </ajax-button>
-            <ajax-button
-              variant="danger"
-              method="post"
-              :href="route('api.unfollow', { artist })"
-              v-else
-              @refresh="refresh"
-            >
-              Unfollow
-            </ajax-button>
+            />
           </div>
         </div>
       </template>
@@ -75,6 +61,7 @@ import AjaxButton from "./base/AjaxButton.vue";
 import DefaultBadge from "./Badges/DefaultBadge.vue";
 import { router } from "@inertiajs/vue3";
 import TrackListen from "./TrackListen.vue";
+import FollowButton from "./Tracks/FollowButton.vue";
 
 const props = defineProps(["artist"]);
 
@@ -89,7 +76,7 @@ function refresh(response) {
 }
 
 function listenUpdate(response, prev_track, ignore, force_ignore) {
-  // force ignore means artist action for now (may changed in future)
+  // force ignore means "artist action" for now (may changed in future)
   if (!force_ignore) {
     const prev_artist = prev_track.value.artist;
     const current_artist = response.data.artist;
