@@ -7,7 +7,7 @@ use App\Http\Controllers\TrackController;
 use App\Http\Controllers\ArtistController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['web'])->as('api.')->group(function () {
+Route::as('api.')->group(function () {
   Route::apiResource('artists', ArtistController::class);
 
   Route::apiResource('categories', CategoryController::class);
