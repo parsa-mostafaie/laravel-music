@@ -42,7 +42,7 @@ class CategoryController extends Controller
         'name LIKE ?',
         ["%{$request->get('search')}%"]
       )
-        ->paginate(2);
+        ->paginate(10);
   }
 
   public function destroy(CategoriesRequest $request, Category $category)
