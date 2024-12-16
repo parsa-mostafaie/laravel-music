@@ -25,7 +25,7 @@ class UserController extends Controller
         ["%{$request->get('search')}%"]
       )
         ->withCount('followings')
-        ->paginate(2);
+        ->paginate(10);
   }
 
 
