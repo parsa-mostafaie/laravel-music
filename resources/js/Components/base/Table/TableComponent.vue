@@ -4,14 +4,14 @@
       <div class="min-w-full inline-block align-middle">
         <div class="overflow-x-auto">
           <table
-            class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700"
+            class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 text-center"
           >
             <thead>
               <tr class="bg-neutral-300">
                 <th
                   v-for="column in props.columns"
                   scope="col"
-                  class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                  class="px-6 py-3 text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
                 >
                   {{ column }}
                 </th>

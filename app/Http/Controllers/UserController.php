@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ManagersOnlyRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
+  public function __construct(
+    protected UserService $userService
+  ) {}
+
   public function manage(ManagersOnlyRequest $request)
   {
     return inertia('Manager/Users', [
@@ -19,33 +23,20 @@ class UserController extends Controller
 
   public function index(ManagersOnlyRequest $request)
   {
-    return
-      User::whereRaw(
-        'name LIKE ?',
-        ["%{$request->get('search')}%"]
-      )
-        ->withCount('followings')
-        ->paginate(10);
+    return $this->userService->paginate($request->search, withCount: 'followings');
   }
-
 
   public function grow(User $user)
   {
     Gate::authorize('grow-users', [$user]);
 
-    User::withoutTimestamps(function () use ($user) {
-      $user->role = User::validateRole($user->role + 1);
-      $user->save();
-    });
+    return $this->userService->grow($user);
   }
 
   public function shrink(User $user)
   {
     Gate::authorize('shrink-users', [$user]);
 
-    User::withoutTimestamps(function () use ($user) {
-      $user->role = User::validateRole($user->role - 1);
-      $user->save();
-    });
+    return $this->userService->shrink($user);
   }
 }
