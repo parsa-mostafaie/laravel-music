@@ -37,18 +37,9 @@ class UserService
     }
 
     // TODO:    Functions Below, Are not implemented yet. are handled by jetstream
-    public function create(array $data)
-    {
-        return $this->userRepository->create($data);
-    }
+    public function create(array $data) {}
 
-    public function update(array $data, $id)
-    {
-        return $this->userRepository->update($data, $id);
-    }
+    public function update(array $data, $id) {}
 
-    public function delete($id)
-    {
-        return $this->userRepository->delete($id);
-    }
+    public function delete($id) {}
 }

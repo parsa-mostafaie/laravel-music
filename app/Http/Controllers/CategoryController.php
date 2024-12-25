@@ -7,12 +7,15 @@ use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Requests\ManagersOnlyRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Services\CategoryService;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+  public function __construct(
+    protected CategoryService $categoryService
+  ) {}
+
   public function manage(ManagersOnlyRequest $request)
   {
     return Inertia::render('Manager/Categories', [
@@ -24,31 +27,23 @@ class CategoryController extends Controller
 
   public function store(CategoryStoreRequest $request)
   {
-    return Category::create($request->all());
+    return $this->categoryService->create($request->all());
   }
 
   public function update(CategoryUpdateRequest $request, Category $category)
   {
-    return response(
-      tap($category, fn($category) => $category->update($request->all())),
-      200
-    );
+    return response($this->categoryService->update($request->all(), $category), 200);
   }
 
   public function index(ManagersOnlyRequest $request)
   {
-    return
-      Category::whereRaw(
-        'name LIKE ?',
-        ["%{$request->get('search')}%"]
-      )
-        ->paginate(10);
+    return $this->categoryService->paginate($request->search);
   }
 
   public function destroy(CategoriesRequest $request, Category $category)
   {
-    $category->delete();
+    $this->categoryService->delete($category);
 
-    return response("Category was deleted successfully!", 200);
+    return response(__("Category was deleted successfully!"), 200);
   }
 }
